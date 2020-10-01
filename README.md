@@ -37,13 +37,26 @@ def deps do
 end
 ```
 
-## Use in Your Code
+## Function Reference
+
+### `atomize_map_keys/1`
+
+Converts a `Map` that has strings as keys (or mixed keys)
+to have only atoms.
 
 ```elixir
 # map that has different types of keys:
 my_map = %{"name" => "Alex", id: 1}
 Useful.atomize_map_keys(my_map)
 %{name: Alex, id: 1}
+```
+
+Works recursively for deeply nested maps:
+
+```elixir
+person = %{"name" => "Alex", id: 1, details: %{"age" => 17, height: 185}}
+Useful.atomize_map_keys(my_map)
+%{name: Alex, id: 1, details: %{age: 17, height: 185}}
 ```
 
 
