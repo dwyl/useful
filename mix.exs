@@ -28,7 +28,6 @@ defmodule Useful.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-
       # Keep Code Tidy: https://github.com/rrrene/credo
       {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
 
@@ -43,7 +42,7 @@ defmodule Useful.MixProject do
     ]
   end
 
-  # package info for publishing to Hex.pm
+  #  package info for publishing to Hex.pm
   defp package() do
     [
       files: ~w(lib LICENSE mix.exs README.md),

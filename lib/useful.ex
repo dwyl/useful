@@ -1,6 +1,6 @@
 defmodule Useful do
   @moduledoc """
-  Documentation for `Useful`.
+  Documentation for `Useful` functions library.
   """
 
   @doc """
