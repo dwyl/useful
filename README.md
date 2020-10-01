@@ -1,9 +1,12 @@
+<div align="center">
 # `useful`
 
 A collection of useful functions for working in `Elixir`.
 
 
-# Why?
+</div>
+
+# Why?
 
 We found ourselves copy-pasting a few useful "helper" functions
 across our Elixir projects and it wasn't 
