@@ -24,6 +24,30 @@ so that _anyone_ can benefit from it.
 # How?
 
 
+## Install
+
+The package can be installed
+by adding `useful` to your list of dependencies in `mix.exs`:
+
+```elixir
+def deps do
+  [
+    {:useful, "~> 0.1.0"}
+  ]
+end
+```
+
+## Use in Your Code
+
+```elixir
+# map that has different types of keys:
+my_map = %{"name" => "Alex", id: 1}
+Useful.atomize_map_keys(my_map)
+%{name: Alex, id: 1}
+```
+
 
 # Docs
 
+Detailed docs available at:
+[https://hexdocs.pm/useful](https://hexdocs.pm/useful)
