@@ -1,8 +1,12 @@
 <div align="center">
 # `useful`
 
-A collection of useful functions for working in `Elixir`.
+A collection of useful functions for building `Elixir` Apps.
 
+[![Build Status](https://img.shields.io/travis/com/dwyl/useful/master?color=bright-green&style=flat-square)](https://travis-ci.org/dwyl/useful)
+[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/useful/master.svg?style=flat-square)](http://codecov.io/github/dwyl/useful?branch=master)
+[![Hex.pm](https://img.shields.io/hexpm/v/useful?color=brightgreen&style=flat-square)](https://hex.pm/packages/useful)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/useful/issues)
 
 </div>
 
