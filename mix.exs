@@ -9,6 +9,7 @@ defmodule Useful.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       package: package(),
+      test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
         coveralls: :test,
         "coveralls.detail": :test,
