@@ -4,6 +4,7 @@ defmodule Useful.MixProject do
   def project do
     [
       app: :useful,
+      description: "A collection of useful functions",
       version: "0.1.0",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
