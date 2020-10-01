@@ -1,6 +1,6 @@
 defmodule Useful do
   @moduledoc """
-  Documentation for `Useful` functions library.
+  A Library of `Useful` functions for building `Elixir` Apps.
   """
 
   @doc """

@@ -9,18 +9,22 @@ A collection of useful functions for building `Elixir` Apps.
 [![Hex.pm](https://img.shields.io/hexpm/v/useful?color=brightgreen&style=flat-square)](https://hex.pm/packages/useful)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/useful/issues)
 
+![swiss-army-knife](https://user-images.githubusercontent.com/194400/94815682-b646e300-03f2-11eb-8069-46b9e10fac7e.png)
+
+
 </div>
 
 # Why?
 
 We found ourselves copy-pasting a few useful "helper" functions
-across our Elixir projects and it wasn't 
+across our Elixir projects ... <br />
+it wasn't 
 ["DRY"](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself),
 so we created this library.
 
 # What?
 
-A library of useful functions that we need for building apps in `Elixir`.
+A library of useful functions that we need for building `Elixir` Apps.
 
 
 # Who?
@@ -50,7 +54,7 @@ end
 ### `atomize_map_keys/1`
 
 Converts a `Map` that has strings as keys (or mixed keys)
-to have only atoms.
+to have only atom keys. e.g:
 
 ```elixir
 # map that has different types of keys:
@@ -71,4 +75,4 @@ Useful.atomize_map_keys(my_map)
 # Docs
 
 Detailed docs available at:
-[https://hexdocs.pm/useful](https://hexdocs.pm/useful)
+https://hexdocs.pm/useful/Useful.html
