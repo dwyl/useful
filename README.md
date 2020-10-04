@@ -11,14 +11,13 @@ A collection of useful functions for building `Elixir` Apps.
 
 ![swiss-army-knife](https://user-images.githubusercontent.com/194400/94815682-b646e300-03f2-11eb-8069-46b9e10fac7e.png)
 
-
 </div>
 
 # Why?
 
 We found ourselves copy-pasting a few useful "helper" functions
 across our Elixir projects ... <br />
-it wasn't 
+it wasn't
 ["DRY"](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself),
 so we created this library.
 
@@ -26,15 +25,13 @@ so we created this library.
 
 A library of useful functions that we need for building `Elixir` Apps.
 
-
 # Who?
 
 This library is for our use on our various `Elixir` / `Phoenix` apps.
-As with everything we do it's Open Source, Tested and Documented 
+As with everything we do it's Open Source, Tested and Documented
 so that _anyone_ can benefit from it.
 
 # How?
-
 
 ## Install
 
@@ -67,10 +64,30 @@ Works recursively for deeply nested maps:
 
 ```elixir
 person = %{"name" => "Alex", id: 1, details: %{"age" => 17, height: 185}}
-Useful.atomize_map_keys(my_map)
+Useful.atomize_map_keys(person)
 %{name: Alex, id: 1, details: %{age: 17, height: 185}}
 ```
 
+### `flatten_map/1`
+
+Flatten a `Map` of any depth/nesting:
+
+```elixir
+iex> map = %{name: "alex", data: %{age: 17, height: 185}}
+iex> Useful.flatten_map(map)
+%{data__age: 17, data__height: 185, name: "alex"}
+```
+
+**Note**: `flatten_map/1` converts all Map keys to `Atom`
+as it's easier to work with atoms as keys e.g: `person.name` instead of `person["name"]`.
+We use the `__` (_double underscore_) as the delimiter for the keys of nested maps,
+because if we attempt to use `.` (_period character_) we get an error:
+
+```elixir
+iex(1)> :a.b
+** (UndefinedFunctionError) function :a.b/0 is undefined (module :a is not available)
+    :a.b()
+```
 
 # Docs
 

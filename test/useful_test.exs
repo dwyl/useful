@@ -18,7 +18,7 @@ defmodule UsefulTest do
   test "flatten_map/1 flattens a deeply nested map" do
     map = %{name: "alex", data: %{age: 17, height: 185}}
     expected = Useful.flatten_map(map)
-    assert expected == %{"name" => "alex", "data.age" => 17, "data.height" => 185}
+    assert expected == %{data__age: 17, data__height: 185, name: "alex"}
   end
 
   test "flatten_map/1 handles Date and DateTime values" do
@@ -30,9 +30,9 @@ defmodule UsefulTest do
       }
     expected = Useful.flatten_map(map)
     assert expected == %{
-      "date" => ~D[2000-01-01],
-      "data.dateTime" => ~U[2016-05-24 13:26:08.003Z],
-      "data.height" => 185
+      data__dateTime: ~U[2016-05-24 13:26:08.003Z],
+      data__height: 185,
+      date: ~D[2000-01-01]
     }
   end
 
@@ -54,11 +54,11 @@ defmodule UsefulTest do
     }
     expected = Useful.flatten_map(map)
     assert expected == %{
-      "data.address.detail.house_color" => "white",
-      "data.address.detail.more_info.architect" => "James Hoban",
-      "data.address.first_line" => "1600 Pennsylvania Avenue",
-      "data.address.post_code" => "20500",
-      "name" => "Alex"
+      data__address__detail__house_color: "white",
+      data__address__detail__more_info__architect: "James Hoban",
+      data__address__first_line: "1600 Pennsylvania Avenue",
+      data__address__post_code: "20500",
+      name: "Alex"
     }
   end
 end

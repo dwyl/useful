@@ -10,8 +10,10 @@ defmodule Useful.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       package: package(),
+      aliases: aliases(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
+        c: :test,
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.json": :test,
@@ -52,6 +54,12 @@ defmodule Useful.MixProject do
       licenses: ["GNU GPL v2.0"],
       maintainers: ["dwyl"],
       links: %{"GitHub" => "https://github.com/dwyl/useful"}
+    ]
+  end
+
+  defp aliases do
+    [
+      c: ["coveralls.html"]
     ]
   end
 end

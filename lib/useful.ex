@@ -36,7 +36,7 @@ defmodule Useful do
 
       iex> map = %{name: "alex", data: %{age: 17, height: 185}}
       iex> Useful.flatten_map(map)
-      %{"name" => "alex", "data.age" => 17, "data.height" => 185}
+      %{data__age: 17, data__height: 185, name: "alex"}
 
   """
   def flatten_map(map) when is_map(map) do
@@ -51,15 +51,20 @@ defmodule Useful do
     |> List.flatten()
   end
 
-  defp process({key, %DateTime{} = datetime}), do: {"#{key}", datetime}
-  defp process({key, %Date{} = date}), do: {"#{key}", date}
+  # avoids ** (Protocol.UndefinedError) protocol Enumerable
+  # not implemented for ~U[2016-05-24 13:26:08.003Z] of type DateTime
+  defp process({key, %Date{} = date}), do: return({key, date})
+  defp process({key, %DateTime{} = datetime}), do: return({key, datetime})
 
   defp process({key, sub_map}) when is_map(sub_map) do
     for {sub_key, value} <- flatten_map(sub_map) do
-      {"#{key}.#{sub_key}", value}
+      {String.to_atom("#{key}__#{sub_key}"), value}
     end
   end
 
-  defp process({key, value}), do: {"#{key}", process(value)}
-  defp process(value), do: value
+  defp process({key, value}), do: return({key, value})
+  # defp process(value), do: value
+  defp return({key, value}) do
+    {String.to_atom("#{key}"), value}
+  end
 end
