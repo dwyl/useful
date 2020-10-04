@@ -29,7 +29,11 @@ defmodule Useful do
   def atomize_map_keys(value), do: value
 
   @doc """
-  `flatten_map/1` flattens a `Map` of any depth
+  `flatten_map/1` flattens a `Map` of any depth/nesting for easier processing.
+  Deeply nested maps are denoted by "__" (double underscore) e.g:
+  `%{name: Alex, detail: %{age: 17}}` becomes `%{name: Alex, detail__age: 17}`
+  this makes it easy to see what the data structure was before flattening.
+  Map keys are converted to Atom for simpler access and consistency.
   Inspired by: https://stackoverflow.com/questions/39401947/flatten-nested-map
 
   ## Examples
