@@ -9,7 +9,7 @@ defmodule UsefulTest do
   end
 
   test "atomize_map_keys/1 converts deeply nested map" do
-    map = %{"name" => "alex", id: 1, nested: %{ "age" => 17, height: 185}}
+    map = %{"name" => "alex", id: 1, nested: %{"age" => 17, height: 185}}
     # IO.inspect(map, label: "map")
     expected = Useful.atomize_map_keys(map)
     assert expected == %{id: 1, name: "alex", nested: %{age: 17, height: 185}}
@@ -23,17 +23,20 @@ defmodule UsefulTest do
 
   test "flatten_map/1 handles Date and DateTime values" do
     map = %{
-      date: Date.from_erl!({2000, 1, 1}),
+      date: Date.from_erl!({1999, 2, 14}),
       data: %{
-        dateTime: DateTime.from_naive!(~N[2016-05-24 13:26:08.003], "Etc/UTC"),
-        height: 185}
+        dateTime: DateTime.from_naive!(~N[2017-08-05 16:34:08.003], "Etc/UTC"),
+        height: 185
       }
-    expected = Useful.flatten_map(map)
-    assert expected == %{
-      data__dateTime: ~U[2016-05-24 13:26:08.003Z],
-      data__height: 185,
-      date: ~D[2000-01-01]
     }
+
+    expected = Useful.flatten_map(map)
+
+    assert expected == %{
+             data__dateTime: ~U[2017-08-05 16:34:08.003Z],
+             data__height: 185,
+             date: ~D[1999-02-14]
+           }
   end
 
   test "flatten super nested map" do
@@ -52,13 +55,15 @@ defmodule UsefulTest do
         }
       }
     }
+
     expected = Useful.flatten_map(map)
+
     assert expected == %{
-      data__address__detail__house_color: "white",
-      data__address__detail__more_info__architect: "James Hoban",
-      data__address__first_line: "1600 Pennsylvania Avenue",
-      data__address__post_code: "20500",
-      name: "Alex"
-    }
+             data__address__detail__house_color: "white",
+             data__address__detail__more_info__architect: "James Hoban",
+             data__address__first_line: "1600 Pennsylvania Avenue",
+             data__address__post_code: "20500",
+             name: "Alex"
+           }
   end
 end

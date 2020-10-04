@@ -79,9 +79,12 @@ iex> Useful.flatten_map(map)
 ```
 
 **Note**: `flatten_map/1` converts all Map keys to `Atom`
-as it's easier to work with atoms as keys e.g: `person.name` instead of `person["name"]`.
-We use the `__` (_double underscore_) as the delimiter for the keys of nested maps,
-because if we attempt to use `.` (_period character_) we get an error:
+as it's easier to work with atoms as keys
+e.g: `map.person__name` instead of `map["person__name"]`.
+We use the `__` (_double underscore_)
+as the delimiter for the keys of nested maps,
+because if we attempt to use `.` (_period character_)
+we get an error:
 
 ```elixir
 iex(1)> :a.b

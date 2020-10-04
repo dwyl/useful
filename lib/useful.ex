@@ -49,26 +49,30 @@ defmodule Useful do
     |> Enum.into(%{})
   end
 
+  # Recap: https://elixir-lang.org/getting-started/basic-types.html#tuples
   defp to_list_of_tuples(map) do
     map
     |> Enum.map(&process/1)
     |> List.flatten()
   end
 
-  # avoids ** (Protocol.UndefinedError) protocol Enumerable
-  # not implemented for ~U[2016-05-24 13:26:08.003Z] of type DateTime
-  defp process({key, %Date{} = date}), do: return({key, date})
-  defp process({key, %DateTime{} = datetime}), do: return({key, datetime})
+  # avoids the error "** (Protocol.UndefinedError) protocol Enumerable
+  #   not implemented for ~U[2017-08-05 16:34:08.003Z] of type DateTime"
+  defp process({key, %Date{} = date}), do: format({key, date})
+  defp process({key, %DateTime{} = datetime}), do: format({key, datetime})
 
+  # process nested maps
   defp process({key, sub_map}) when is_map(sub_map) do
     for {sub_key, value} <- flatten_map(sub_map) do
-      {String.to_atom("#{key}__#{sub_key}"), value}
+      format({"#{key}__#{sub_key}", value})
     end
   end
 
-  defp process({key, value}), do: return({key, value})
-  # defp process(value), do: value
-  defp return({key, value}) do
+  # catch-all for any type of key/value
+  defp process({key, value}), do: format({key, value})
+
+  # format the {key: value} with Atom key for simpler access
+  defp format({key, value}) do
     {String.to_atom("#{key}"), value}
   end
 end
