@@ -41,7 +41,7 @@ by adding `useful` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:useful, "~> 0.1.0"}
+    {:useful, "~> 0.2.0"}
   ]
 end
 ```
