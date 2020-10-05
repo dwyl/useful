@@ -66,4 +66,10 @@ defmodule UsefulTest do
              name: "Alex"
            }
   end
+
+  describe "stringfy_map/1" do
+    test "returns nil string when map is nil" do
+      assert Useful.stringify_map(nil) == "nil"
+    end
+  end
 end

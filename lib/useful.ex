@@ -49,6 +49,30 @@ defmodule Useful do
     |> Enum.into(%{})
   end
 
+  @doc """
+  `stringy_map/1` converts a `Map` of any depth/nesting into a string.
+  Deeply nested maps are denoted by "__" (double underscore). See flatten_map/1
+  for more details.
+
+  ## Options
+
+  * :
+
+  ## Examples
+
+      iex> map = %{name: "alex", data: %{age: 17, height: 185}}
+      iex> Useful.stringify_map(map)
+      "data__age: 17, data__height: 185, name: alex"
+
+  """
+  def stringify_map(map) when is_nil(map), do: "nil"
+  def stringify_map(map) when is_map(map) do
+    map
+    |> flatten_map()
+    |> Enum.map(fn {key, value} -> "#{key}: #{value}" end)
+    |> Enum.join(", ")
+  end
+
   # Recap: https://elixir-lang.org/getting-started/basic-types.html#tuples
   defp to_list_of_tuples(map) do
     map
