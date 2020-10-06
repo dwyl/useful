@@ -71,5 +71,10 @@ defmodule UsefulTest do
     test "returns nil string when map is nil" do
       assert Useful.stringify_map(nil) == "nil"
     end
+
+    test "converts map into strings" do
+      map = %{"name" => "alex", id: 1}
+      assert Useful.stringify_map(map) == "id: 1, name: alex"
+    end
   end
 end
