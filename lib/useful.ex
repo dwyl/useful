@@ -76,10 +76,6 @@ defmodule Useful do
     stringify_tuple({key, "\"#{text}\""})
   end
 
-  def stringify_tuple({key, value}) when is_map(value) do
-    stringify_tuple({key, stringify_map(value)})
-  end
-
   def stringify_tuple({key, value}) do
     "#{key}: #{value}"
   end
