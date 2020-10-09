@@ -76,5 +76,15 @@ defmodule UsefulTest do
       map = %{"name" => "alex", id: 1}
       assert Useful.stringify_map(map) == "id: 1, name: alex"
     end
+
+    test "converts nested maps into strings" do
+      map = %{id: 1, data: %{name: "Vitor"}}
+      assert Useful.stringify_map(map) == "data__name: Vitor, id: 1"
+    end
+
+    test "converts nested lists into strings" do
+      map = %{id: 1, data: %{names: ["Vitor", "alex"]}}
+      assert Useful.stringify_map(map) == "data__names: \"Vitor, alex\", id: 1"
+    end
   end
 end

@@ -55,10 +55,6 @@ defmodule Useful do
   Deeply nested maps are denoted by "__" (double underscore). See flatten_map/1
   for more details.
 
-  ## Options
-
-  * :
-
   ## Examples
 
       iex> map = %{name: "alex", data: %{age: 17, height: 185}}
@@ -67,10 +63,25 @@ defmodule Useful do
 
   """
   def stringify_map(map) when is_nil(map), do: "nil"
+
   def stringify_map(map) when is_map(map) do
     map
     |> flatten_map()
-    |> Enum.map_join(", ", fn {key, value} -> "#{key}: #{value}" end)
+    |> Enum.map(&stringify_tuple/1)
+    |> Enum.join(", ")
+  end
+
+  def stringify_tuple({key, values}) when is_list(values) do
+    text = Enum.join(values, ", ")
+    stringify_tuple({key, "\"#{text}\""})
+  end
+
+  def stringify_tuple({key, value}) when is_map(value) do
+    stringify_tuple({key, stringify_map(value)})
+  end
+
+  def stringify_tuple({key, value}) do
+    "#{key}: #{value}"
   end
 
   # Recap: https://elixir-lang.org/getting-started/basic-types.html#tuples
