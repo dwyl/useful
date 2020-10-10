@@ -66,4 +66,25 @@ defmodule UsefulTest do
              name: "Alex"
            }
   end
+
+  describe "stringfy_map/1" do
+    test "returns nil string when map is nil" do
+      assert Useful.stringify_map(nil) == "nil"
+    end
+
+    test "converts map into strings" do
+      map = %{"name" => "alex", id: 1}
+      assert Useful.stringify_map(map) == "id: 1, name: alex"
+    end
+
+    test "converts nested maps into strings" do
+      map = %{id: 1, data: %{name: "Vitor", other: %{data: "info"}}}
+      assert Useful.stringify_map(map) == "data__name: Vitor, data__other__data: info, id: 1"
+    end
+
+    test "converts nested lists into strings" do
+      map = %{id: 1, data: %{names: ["Vitor", "alex"]}}
+      assert Useful.stringify_map(map) == "data__names: \"Vitor, alex\", id: 1"
+    end
+  end
 end

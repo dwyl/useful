@@ -46,7 +46,38 @@ defmodule Useful do
   def flatten_map(map) when is_map(map) do
     map
     |> to_list_of_tuples
+    |> Enum.map(&key_to_atom/1)
     |> Enum.into(%{})
+  end
+
+  @doc """
+  `stringy_map/1` converts a `Map` of any depth/nesting into a string.
+  Deeply nested maps are denoted by "__" (double underscore). See flatten_map/1
+  for more details.
+
+  ## Examples
+
+      iex> map = %{name: "alex", data: %{age: 17, height: 185}}
+      iex> Useful.stringify_map(map)
+      "data__age: 17, data__height: 185, name: alex"
+
+  """
+  def stringify_map(map) when is_nil(map), do: "nil"
+
+  def stringify_map(map) when is_map(map) do
+    map
+    |> flatten_map()
+    |> Enum.map(&stringify_tuple/1)
+    |> Enum.join(", ")
+  end
+
+  def stringify_tuple({key, values}) when is_list(values) do
+    text = Enum.join(values, ", ")
+    stringify_tuple({key, "\"#{text}\""})
+  end
+
+  def stringify_tuple({key, value}) do
+    "#{key}: #{value}"
   end
 
   # Recap: https://elixir-lang.org/getting-started/basic-types.html#tuples
@@ -58,21 +89,21 @@ defmodule Useful do
 
   # avoids the error "** (Protocol.UndefinedError) protocol Enumerable
   #   not implemented for ~U[2017-08-05 16:34:08.003Z] of type DateTime"
-  defp process({key, %Date{} = date}), do: format({key, date})
-  defp process({key, %DateTime{} = datetime}), do: format({key, datetime})
+  defp process({key, %Date{} = date}), do: {key, date}
+  defp process({key, %DateTime{} = datetime}), do: {key, datetime}
 
   # process nested maps
   defp process({key, sub_map}) when is_map(sub_map) do
     for {sub_key, value} <- flatten_map(sub_map) do
-      format({"#{key}__#{sub_key}", value})
+      {"#{key}__#{sub_key}", value}
     end
   end
 
   # catch-all for any type of key/value
-  defp process({key, value}), do: format({key, value})
+  defp process({key, value}), do: {key, value}
 
-  # format the {key: value} with Atom key for simpler access
-  defp format({key, value}) do
+  # Converts the {key: value} with Atom key for simpler access
+  defp key_to_atom({key, value}) do
     {String.to_atom("#{key}"), value}
   end
 end
