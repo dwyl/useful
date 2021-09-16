@@ -138,6 +138,12 @@ defmodule UsefulTest do
       assert Useful.typeof(pid) == "pid"
     end
 
+    # https://hexdocs.pm/elixir/1.12/Port.html
+    test "port" do
+      port = Port.open({:spawn, "cat"}, [:binary])
+      assert Useful.typeof(port) == "port"
+    end
+
     test "reference" do
       ref = :erlang.make_ref
       assert Useful.typeof(ref) == "reference"
