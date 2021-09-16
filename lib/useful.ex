@@ -132,6 +132,13 @@ defmodule Useful do
       iex> Useful.typeof(bin)
       "binary"
 
+      iex> bitstr = <<1::3>>
+      iex> Useful.typeof(bitstr)
+      "bitstring"
+
+      iex> Useful.typeof(:true)
+      "boolean"
+
       iex> pi = 3.14159
       iex> Useful.typeof(pi)
       "float"
@@ -151,8 +158,30 @@ defmodule Useful do
       iex> Useful.typeof(list)
       "list"
 
+      iex> map = %{:foo => "bar", "hello" => :world}
+      iex> Useful.typeof(map)
+      "map"
+
+      iex> Useful.typeof(nil)
+      "nil"
+
+      iex> pid = spawn(fn -> 1 + 2 end)
+      iex> Useful.typeof(pid)
+      "pid"
+
+      iex> port = Port.open({:spawn, "cat"}, [:binary])
+      iex> Useful.typeof(port)
+      "port"
+
+      iex> ref = :erlang.make_ref
+      iex> Useful.typeof(ref)
+      "reference"
+
+      iex> tuple = {:name, "alex"}
+      iex> Useful.typeof(tuple)
+      "tuple"
   """
-  types = ~w[atom binary bitstring float function integer list map nil pid port reference tuple]
+  types = ~w[boolean binary bitstring float function integer list map nil pid port reference tuple atom]
   for type <- types do
     def typeof(x) when unquote(:"is_#{type}")(x), do: unquote(type)
   end

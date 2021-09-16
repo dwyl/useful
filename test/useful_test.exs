@@ -99,10 +99,12 @@ defmodule UsefulTest do
       assert Useful.typeof(string) == "binary"
     end
 
+    # recap: https://elixir-lang.readthedocs.io/en/latest/intro/6.html#binaries-and-bitstrings
     test "returns \"bitstring\" when variable is a bitstring" do
-      bitstr = <<0, "foo">>
+      bitstr = << 1 :: size(1)>>
       assert Useful.typeof(bitstr) == "bitstring"
     end
+    # "Every binary is a bitstring but every bitstring need not be a binary" ...
 
     test "returns \"float\" if the value is float" do
       golden = 1.618
@@ -115,6 +117,35 @@ defmodule UsefulTest do
       assert Useful.typeof(sum) == "function"
 
       assert Useful.typeof(&Useful.typeof/1) == "function"
+    end
+
+    test "list" do
+      list = [1,2,3,4]
+      assert Useful.typeof(list) == "list"
+    end
+
+    test "map" do
+      map = %{:foo => "bar", "hello" => :world}
+      assert Useful.typeof(map) == "map"
+    end
+
+    test "nil" do
+      assert Useful.typeof(nil) == "nil"
+    end
+
+    test "pid" do
+      pid = spawn(fn -> 1 + 2 end)
+      assert Useful.typeof(pid) == "pid"
+    end
+
+    test "reference" do
+      ref = :erlang.make_ref
+      assert Useful.typeof(ref) == "reference"
+    end
+
+    test "tuple" do
+      tuple = {:name, "alex"}
+      assert Useful.typeof(tuple) == "tuple"
     end
   end
 end
