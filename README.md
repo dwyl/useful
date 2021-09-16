@@ -132,6 +132,3 @@ please
 so that we can all benefit from useful functions. 
 
 Thanks! 
-
-
-
