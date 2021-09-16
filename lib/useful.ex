@@ -71,6 +71,17 @@ defmodule Useful do
     |> Enum.join(", ")
   end
 
+
+  @doc """
+  `stringify_tuple/1` stringifies a `Tuple` with arbitrary values.
+  Handy when you want to print out a tuple during debugging.
+
+  ## Examples
+
+      iex> tuple = {:name, "alex"}
+      iex> Useful.stringify_tuple(tuple)
+      "name: alex"
+  """
   def stringify_tuple({key, values}) when is_list(values) do
     text = Enum.join(values, ", ")
     stringify_tuple({key, "\"#{text}\""})
@@ -105,5 +116,44 @@ defmodule Useful do
   # Converts the {key: value} with Atom key for simpler access
   defp key_to_atom({key, value}) do
     {String.to_atom("#{key}"), value}
+  end
+
+
+  @doc """
+  `typeof/1` returns the type of a vairable.
+  Inspired by stackoverflow.com/questions/28377135/check-typeof-variable-in-elixir
+
+  ## Examples
+
+      iex> Useful.typeof(:atom)
+      "atom"
+
+      iex> bin = "hello"
+      iex> Useful.typeof(bin)
+      "binary"
+
+      iex> pi = 3.14159
+      iex> Useful.typeof(pi)
+      "float"
+
+      iex> fun = fn (a, b) -> a + b end
+      iex> Useful.typeof(fun)
+      "function"
+
+      iex> Useful.typeof(&Useful.typeof/1)
+      "function"
+
+      iex> int = 42
+      iex> Useful.typeof(int)
+      "integer"
+
+      iex> list = [1,2,3,4]
+      iex> Useful.typeof(list)
+      "list"
+
+  """
+  types = ~w[atom binary bitstring float function integer list map nil pid port reference tuple]
+  for type <- types do
+    def typeof(x) when unquote(:"is_#{type}")(x), do: unquote(type)
   end
 end

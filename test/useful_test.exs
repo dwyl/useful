@@ -87,4 +87,34 @@ defmodule UsefulTest do
       assert Useful.stringify_map(map) == "data__names: \"Vitor, alex\", id: 1"
     end
   end
+
+  describe "typeof/1" do
+    test "returns \"atom\" for an :atom" do 
+      assert Useful.typeof(:atom) == "atom"
+    end
+
+    # recap: https://elixir-lang.org/getting-started/binaries-strings-and-char-lists.html
+    test "returns \"binary\" when variable is a binary" do
+      string = "hello"
+      assert Useful.typeof(string) == "binary"
+    end
+
+    test "returns \"bitstring\" when variable is a bitstring" do
+      bitstr = <<0, "foo">>
+      assert Useful.typeof(bitstr) == "bitstring"
+    end
+
+    test "returns \"float\" if the value is float" do
+      golden = 1.618
+      assert Useful.typeof(golden) == "float"
+    end
+
+    test "returns \"function\" when the variable is a function" do
+      sum = fn (a, b) -> a + b end
+      assert sum.(2, 3) == 5
+      assert Useful.typeof(sum) == "function"
+
+      assert Useful.typeof(&Useful.typeof/1) == "function"
+    end
+  end
 end

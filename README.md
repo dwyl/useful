@@ -13,7 +13,7 @@ A collection of useful functions for building `Elixir` Apps.
 
 </div>
 
-# Why?
+# Why? 🤷
 
 We found ourselves copy-pasting a few useful "helper" functions
 across our Elixir projects ... <br />
@@ -21,32 +21,31 @@ it wasn't
 ["DRY"](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself),
 so we created this library.
 
-# What?
+# What? 💭
 
 A library of useful functions that we need for building `Elixir` Apps.
 
-# Who?
+# Who? 👤
 
 This library is for our use on our various `Elixir` / `Phoenix` apps.
 As with everything we do it's Open Source, Tested and Documented
 so that _anyone_ can benefit from it.
 
-# How?
+# How? 💻
 
-## Install
+## Install ⬇️
 
-The package can be installed
-by adding `useful` to your list of dependencies in `mix.exs`:
+Install by adding `useful` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:useful, "~> 0.3.0"}
+    {:useful, "~> 0.4.0"}
   ]
 end
 ```
 
-## Function Reference
+## Function Reference 
 
 ### `atomize_map_keys/1`
 
@@ -92,7 +91,47 @@ iex(1)> :a.b
     :a.b()
 ```
 
-# Docs
+### `stringify_tuple/1`
+
+Stringify a tuple of any length; useful in debugging.
+
+```elixir
+iex> tuple = {:ok, :example}
+iex> Useful.stringify_tuple(tuple)
+"ok: example"
+```
+
+### `typeof/1`
+
+Returns the type of a variable, e.g: "function" or "integer"
+Inspired by 
+[**`typeof`**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof)
+from `JavaScript` land.
+
+```elixir
+iex> myvar = 42
+iex> Useful.typeof(myvar)
+"integer"
+```
+
+<br />
+
+# Docs 📜
 
 Detailed docs available at:
 https://hexdocs.pm/useful/Useful.html
+
+<br />
+
+# Help Us Help You! 🙏 
+
+If you need a specific helper function or utility 
+(e.g: something you found useful in a different programming language),
+please 
+[open an issue](https://github.com/dwyl/useful/issues)
+so that we can all benefit from useful functions. 
+
+Thanks! 
+
+
+
