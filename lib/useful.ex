@@ -71,7 +71,6 @@ defmodule Useful do
     |> Enum.join(", ")
   end
 
-
   @doc """
   `stringify_tuple/1` stringifies a `Tuple` with arbitrary values.
   Handy when you want to print out a tuple during debugging.
@@ -117,7 +116,6 @@ defmodule Useful do
   defp key_to_atom({key, value}) do
     {String.to_atom("#{key}"), value}
   end
-
 
   @doc """
   `typeof/1` returns the type of a vairable.
@@ -181,7 +179,9 @@ defmodule Useful do
       iex> Useful.typeof(tuple)
       "tuple"
   """
-  types = ~w[boolean binary bitstring float function integer list map nil pid port reference tuple atom]
+  types =
+    ~w[boolean binary bitstring float function integer list map nil pid port reference tuple atom]
+
   for type <- types do
     def typeof(x) when unquote(:"is_#{type}")(x), do: unquote(type)
   end

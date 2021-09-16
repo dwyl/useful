@@ -89,11 +89,11 @@ defmodule UsefulTest do
   end
 
   describe "typeof/1" do
-    test "returns \"atom\" for an :atom" do 
+    test "returns \"atom\" for an :atom" do
       assert Useful.typeof(:atom) == "atom"
     end
 
-    # recap: https://elixir-lang.org/getting-started/binaries-strings-and-char-lists.html
+    #  recap: https://elixir-lang.org/getting-started/binaries-strings-and-char-lists.html
     test "returns \"binary\" when variable is a binary" do
       string = "hello"
       assert Useful.typeof(string) == "binary"
@@ -101,9 +101,10 @@ defmodule UsefulTest do
 
     # recap: https://elixir-lang.readthedocs.io/en/latest/intro/6.html#binaries-and-bitstrings
     test "returns \"bitstring\" when variable is a bitstring" do
-      bitstr = << 1 :: size(1)>>
+      bitstr = <<1::size(1)>>
       assert Useful.typeof(bitstr) == "bitstring"
     end
+
     # "Every binary is a bitstring but every bitstring need not be a binary" ...
 
     test "returns \"float\" if the value is float" do
@@ -112,7 +113,7 @@ defmodule UsefulTest do
     end
 
     test "returns \"function\" when the variable is a function" do
-      sum = fn (a, b) -> a + b end
+      sum = fn a, b -> a + b end
       assert sum.(2, 3) == 5
       assert Useful.typeof(sum) == "function"
 
@@ -120,7 +121,7 @@ defmodule UsefulTest do
     end
 
     test "list" do
-      list = [1,2,3,4]
+      list = [1, 2, 3, 4]
       assert Useful.typeof(list) == "list"
     end
 
@@ -145,7 +146,7 @@ defmodule UsefulTest do
     end
 
     test "reference" do
-      ref = :erlang.make_ref
+      ref = :erlang.make_ref()
       assert Useful.typeof(ref) == "reference"
     end
 
