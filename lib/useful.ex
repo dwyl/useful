@@ -185,4 +185,6 @@ defmodule Useful do
   for type <- types do
     def typeof(x) when unquote(:"is_#{type}")(x), do: unquote(type)
   end
+
+  def typeof(_) do "unknown" end
 end
