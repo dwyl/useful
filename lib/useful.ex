@@ -71,6 +71,16 @@ defmodule Useful do
     |> Enum.join(", ")
   end
 
+  @doc """
+  `stringify_tuple/1` stringifies a `Tuple` with arbitrary values.
+  Handy when you want to print out a tuple during debugging.
+
+  ## Examples
+
+      iex> tuple = {:name, "alex"}
+      iex> Useful.stringify_tuple(tuple)
+      "name: alex"
+  """
   def stringify_tuple({key, values}) when is_list(values) do
     text = Enum.join(values, ", ")
     stringify_tuple({key, "\"#{text}\""})
@@ -106,4 +116,75 @@ defmodule Useful do
   defp key_to_atom({key, value}) do
     {String.to_atom("#{key}"), value}
   end
+
+  @doc """
+  `typeof/1` returns the type of a vairable.
+  Inspired by stackoverflow.com/questions/28377135/check-typeof-variable-in-elixir
+
+  ## Examples
+
+      iex> Useful.typeof(:atom)
+      "atom"
+
+      iex> bin = "hello"
+      iex> Useful.typeof(bin)
+      "binary"
+
+      iex> bitstr = <<1::3>>
+      iex> Useful.typeof(bitstr)
+      "bitstring"
+
+      iex> Useful.typeof(:true)
+      "boolean"
+
+      iex> pi = 3.14159
+      iex> Useful.typeof(pi)
+      "float"
+
+      iex> fun = fn (a, b) -> a + b end
+      iex> Useful.typeof(fun)
+      "function"
+
+      iex> Useful.typeof(&Useful.typeof/1)
+      "function"
+
+      iex> int = 42
+      iex> Useful.typeof(int)
+      "integer"
+
+      iex> list = [1,2,3,4]
+      iex> Useful.typeof(list)
+      "list"
+
+      iex> map = %{:foo => "bar", "hello" => :world}
+      iex> Useful.typeof(map)
+      "map"
+
+      iex> Useful.typeof(nil)
+      "nil"
+
+      iex> pid = spawn(fn -> 1 + 2 end)
+      iex> Useful.typeof(pid)
+      "pid"
+
+      iex> port = Port.open({:spawn, "cat"}, [:binary])
+      iex> Useful.typeof(port)
+      "port"
+
+      iex> ref = :erlang.make_ref
+      iex> Useful.typeof(ref)
+      "reference"
+
+      iex> tuple = {:name, "alex"}
+      iex> Useful.typeof(tuple)
+      "tuple"
+  """
+  types =
+    ~w[boolean binary bitstring float function integer list map nil pid port reference tuple atom]
+
+  for type <- types do
+    def typeof(x) when unquote(:"is_#{type}")(x), do: unquote(type)
+  end
+
+  def typeof(_) do "unknown" end
 end
