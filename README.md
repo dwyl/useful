@@ -8,6 +8,7 @@ A collection of useful functions for building `Elixir` Apps.
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/useful/master.svg?style=flat-square)](http://codecov.io/github/dwyl/useful?branch=master)
 [![Hex.pm](https://img.shields.io/hexpm/v/useful?color=brightgreen&style=flat-square)](https://hex.pm/packages/useful)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/useful/issues)
+[![HitCount](http://hits.dwyl.com/dwyl/useful.svg)](http://hits.dwyl.com/dwyl/useful)
 
 ![swiss-army-knife](https://user-images.githubusercontent.com/194400/94815682-b646e300-03f2-11eb-8069-46b9e10fac7e.png)
 
