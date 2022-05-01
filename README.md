@@ -4,8 +4,8 @@
 
 A collection of useful functions for building `Elixir` Apps.
 
-[![Build Status](https://img.shields.io/travis/com/dwyl/useful/master?color=bright-green&style=flat-square)](https://travis-ci.com/dwyl/useful)
-[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/useful/master.svg?style=flat-square)](http://codecov.io/github/dwyl/useful?branch=master)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dwyl/gogs/Elixir%20CI?label=build&style=flat-square)
+[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/gogs/master.svg?style=flat-square)](http://codecov.io/github/dwyl/auth?branch=main)
 [![Hex.pm](https://img.shields.io/hexpm/v/useful?color=brightgreen&style=flat-square)](https://hex.pm/packages/useful)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/useful/issues)
 [![HitCount](http://hits.dwyl.com/dwyl/useful.svg)](http://hits.dwyl.com/dwyl/useful)
