@@ -186,5 +186,7 @@ defmodule Useful do
     def typeof(x) when unquote(:"is_#{type}")(x), do: unquote(type)
   end
 
-  def typeof(_) do "unknown" end
+  def typeof(_) do
+    "unknown"
+  end
 end

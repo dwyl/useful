@@ -5,7 +5,7 @@ defmodule Useful.MixProject do
     [
       app: :useful,
       description: "A collection of useful functions",
-      version: "0.4.0",
+      version: "1.0.0",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -33,13 +33,13 @@ defmodule Useful.MixProject do
   defp deps do
     [
       # Keep Code Tidy: https://github.com/rrrene/credo
-      {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.6.4", only: [:dev, :test], runtime: false},
 
       # track test coverage: https://github.com/parroty/excoveralls
-      {:excoveralls, "~> 0.13.2", only: [:test, :dev]},
+      {:excoveralls, "~> 0.14.4", only: [:test, :dev]},
 
       # Create Documentation Hex.docs: https://hex.pm/packages/ex_doc
-      {:ex_doc, "~> 0.22.6", only: :dev},
+      {:ex_doc, "~> 0.28.4", only: :dev},
 
       # Git pre-commit hook: https://github.com/dwyl/elixir-pre-commit
       {:pre_commit, "~> 0.3.4", only: :dev}
