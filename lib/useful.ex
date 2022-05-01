@@ -186,7 +186,11 @@ defmodule Useful do
     def typeof(x) when unquote(:"is_#{type}")(x), do: unquote(type)
   end
 
+  # No idea how to test this. Do you? ¯\_(ツ)_/¯
+  # coveralls-ignore-start
   def typeof(_) do
     "unknown"
   end
+
+  # coveralls-ignore-stop
 end
