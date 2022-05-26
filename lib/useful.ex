@@ -29,6 +29,24 @@ defmodule Useful do
   def atomize_map_keys(value), do: value
 
   @doc """
+  `empty_dir_contents/1` delete all files including any directories 
+  recursively in a dir but not the dir itself.
+
+  Very happy for anyone to refactor this function to something pretty.
+  """
+  def empty_dir_contents(dir) do
+    if is_nil(dir) do
+      {:error, "dir supplied to Useful.empty_dir_contents/1 is nil"}
+    else
+      if not File.dir?(dir) do
+        {:error, "dir given to Useful.empty_dir_contents/1 is not a directory"}
+      else
+        {:ok, dir}
+      end
+    end
+  end
+
+  @doc """
   `flatten_map/1` flattens a `Map` of any depth/nesting for easier processing.
   Deeply nested maps are denoted by "__" (double underscore) e.g:
   `%{name: Alex, detail: %{age: 17}}` becomes `%{name: Alex, detail__age: 17}`

@@ -15,6 +15,43 @@ defmodule UsefulTest do
     assert expected == %{id: 1, name: "alex", nested: %{age: 17, height: 185}}
   end
 
+  defp create_test_dir do
+    dir = "tmp/deeply/nested/dir/"
+    # attempt to create deeply nested dir:
+    File.mkdir_p(dir)
+    # create file 
+    file_name = "test.txt"
+    file_path = Path.join([dir, file_name]) |> Path.expand()
+    content = "Hey Jude, don't make it bad. Take a sad song and make it better"
+    File.write(file_path, content)
+    # return file_path so we can use it in test
+    file_path
+  end
+
+  describe "empty_dir_contents/1" do
+    test "returns {:error, msg} if dir is nil" do
+      {:error, msg} = Useful.empty_dir_contents(nil)
+      assert String.contains?(msg, "nil")
+    end
+
+    test "returns {:error, msg} if dir arg is not a directory" do
+      {:error, msg} = Useful.empty_dir_contents("not_dir")
+      assert String.contains?(msg, "not a directory")
+    end
+
+    test "returns {:ok, dir} when directory successfully emptied" do
+      file_path = create_test_dir()
+      #  Confirm contents of test file:
+      assert File.read!(file_path) |> String.contains?("Hey Jude")
+      parts = String.split(file_path, "/")
+      IO.inspect(parts)
+      dir_to_clear = List.delete_at(parts, length(parts) - 1) |> Enum.join("/")
+      IO.inspect(dir_to_clear)
+      {:ok, dir} = Useful.empty_dir_contents(dir_to_clear)
+      assert dir == dir_to_clear
+    end
+  end
+
   test "flatten_map/1 flattens a deeply nested map" do
     map = %{name: "alex", data: %{age: 17, height: 185}}
     expected = Useful.flatten_map(map)
