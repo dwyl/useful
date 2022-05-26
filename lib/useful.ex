@@ -35,16 +35,32 @@ defmodule Useful do
   Very happy for anyone to refactor this function to something pretty.
   """
   def empty_dir_contents(dir) do
-    if is_nil(dir) do
-      {:error, "dir supplied to Useful.empty_dir_contents/1 is nil"}
-    else
-      if not File.dir?(dir) do
-        {:error, "dir given to Useful.empty_dir_contents/1 is not a directory"}
-      else
+    cond do
+      is_nil(dir) ->
+        {:error, "dir supplied to Useful.empty_dir_contents/1 is nil"}
+      
+      not File.dir?(dir) ->
+        {:error, "#{dir} arg to Useful.empty_dir_contents/1 not a directory"}
+      
+      true ->
+        # read contents of directory:
+        {:ok, list} = File.ls(dir)
+        Enum.each(list, fn f ->  
+          path = Path.join([dir, f]) |> Path.expand()
+          cond do
+            # delete all dirs recursively:
+            File.dir?(path) ->
+              File.rm_rf(path)
+            # delete any files in the dir:
+            File.exists?(path) ->
+              File.rm(path)
+          end
+        end)
         {:ok, dir}
-      end
+
     end
   end
+
 
   @doc """
   `flatten_map/1` flattens a `Map` of any depth/nesting for easier processing.
