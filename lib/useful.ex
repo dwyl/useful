@@ -57,10 +57,8 @@ defmodule Useful do
           end
         end)
         {:ok, dir}
-
     end
   end
-
 
   @doc """
   `flatten_map/1` flattens a `Map` of any depth/nesting for easier processing.

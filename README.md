@@ -118,6 +118,20 @@ iex> Useful.typeof(myvar)
 "integer"
 ```
 
+### `empty_dir_contents/1`
+
+Empties the directory 
+(+deletes all files and any nested directories_)
+recursively, but does _not_ delete the actual directory.
+This is useful when you want to reset a directory,
+e.g. when testing.
+
+```elixir
+iex> dir = "tmp" # contains lots of sub directories and files
+iex> Useful.empty_dir_contents(dir)
+{:ok, dir}
+```
+
 <br />
 
 # Docs 📜
