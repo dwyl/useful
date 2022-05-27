@@ -25,11 +25,13 @@ so we created this library.
 
 # What? 💭
 
-A library of useful functions that we need for building `Elixir` Apps.
+A library of useful functions 
+that we reach for 
+when building `Elixir` Apps.
 
 # Who? 👤
 
-This library is for our use on our various `Elixir` / `Phoenix` apps.
+This library is used in our various `Elixir` / `Phoenix` apps. <br />
 As with everything we do it's Open Source, Tested and Documented
 so that _anyone_ can benefit from it.
 
@@ -42,12 +44,12 @@ Install by adding `useful` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:useful, "~> 1.0.0"}
+    {:useful, "~> 1.0.8"}
   ]
 end
 ```
 
-## Function Reference 
+## Function Reference
 
 ### `atomize_map_keys/1`
 
@@ -106,7 +108,7 @@ iex> Useful.stringify_tuple(tuple)
 ### `typeof/1`
 
 Returns the type of a variable, e.g: "function" or "integer"
-Inspired by 
+Inspired by
 [**`typeof`**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof)
 from `JavaScript` land.
 
@@ -114,6 +116,20 @@ from `JavaScript` land.
 iex> myvar = 42
 iex> Useful.typeof(myvar)
 "integer"
+```
+
+### `empty_dir_contents/1`
+
+Empties the directory 
+(+deletes all files and any nested directories_)
+recursively, but does _not_ delete the actual directory.
+This is useful when you want to reset a directory,
+e.g. when testing.
+
+```elixir
+iex> dir = "tmp" # contains lots of sub directories and files
+iex> Useful.empty_dir_contents(dir)
+{:ok, dir}
 ```
 
 <br />
@@ -125,12 +141,12 @@ https://hexdocs.pm/useful/Useful.html
 
 <br />
 
-# Help Us Help You! 🙏 
+# Help Us Help You! 🙏
 
-If you need a specific helper function or utility 
+If you need a specific helper function or utility
 (e.g: something you found useful in a different programming language),
-please 
+please
 [open an issue](https://github.com/dwyl/useful/issues)
-so that we can all benefit from useful functions. 
+so that we can all benefit from useful functions.
 
-Thanks! 
+Thanks!
