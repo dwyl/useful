@@ -25,8 +25,8 @@ so we created this library.
 
 # What? 💭
 
-A library of useful functions 
-that we reach for 
+A library of useful functions
+that we reach for
 when building `Elixir` Apps.
 
 # Who? 👤
@@ -95,6 +95,16 @@ iex(1)> :a.b
     :a.b()
 ```
 
+### `stringify_map/1`
+
+Stringify a `Map` e.g. to store it in a DB or log it stdout.
+
+```elixir
+map = %{name: "alex", data: %{age: 17, height: 185}}
+Useful.stringify_map(map)
+"data__age: 17, data__height: 185, name: alex"
+```
+
 ### `stringify_tuple/1`
 
 Stringify a tuple of any length; useful in debugging.
@@ -120,8 +130,8 @@ iex> Useful.typeof(myvar)
 
 ### `empty_dir_contents/1`
 
-Empties the directory 
-(+deletes all files and any nested directories_)
+Empties the directory
+(_deletes all files and any nested directories_)
 recursively, but does _not_ delete the actual directory.
 This is useful when you want to reset a directory,
 e.g. when testing.
