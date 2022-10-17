@@ -131,8 +131,8 @@ iex> Useful.typeof(myvar)
 ### `empty_dir_contents/1`
 
 Empties the directory
-(+deletes all files and any nested directories*)
-recursively, but does \_not* delete the actual directory.
+(_deletes all files and any nested directories_)
+recursively, but does _not_ delete the actual directory.
 This is useful when you want to reset a directory,
 e.g. when testing.
 
