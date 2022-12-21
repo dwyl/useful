@@ -29,7 +29,7 @@ defmodule Useful do
   def atomize_map_keys(value), do: value
 
   @doc """
-  `empty_dir_contents/1` delete all files including any directories 
+  `empty_dir_contents/1` delete all files including any directories
   recursively in a dir but not the dir itself.
 
   Very happy for anyone to refactor this function to something pretty.
@@ -84,6 +84,26 @@ defmodule Useful do
     |> to_list_of_tuples
     |> Enum.map(&key_to_atom/1)
     |> Enum.into(%{})
+  end
+
+  @doc """
+  `get_in_default/3` Proxies `Kernel.get_in/2`
+  but allows setting a `default` value as the 3rd argument.
+
+  ## Examples
+
+      iex> map = %{name: "alex", data: %{age: 17, height: 185}}
+      iex> Useful.get_in_default(map, [:data, :age])
+      17
+      iex> Useful.get_in_default(map, [:data, :iq], 180)
+      180
+  """
+  def get_in_default(map, keys, default \\ nil) do
+    # https://hexdocs.pm/elixir/1.14/Kernel.html#get_in/2
+    case get_in(map, keys) do
+      nil-> default
+      result -> result
+    end
   end
 
   @doc """
