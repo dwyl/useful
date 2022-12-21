@@ -3,6 +3,22 @@ defmodule UsefulTest do
   use Plug.Test
   doctest Useful
 
+  # Mocking nested Conn struct.
+  # Using `defstruct` to make code similar to https://github.com/elixir-plug/plug/blob/main/lib/plug/conn.ex
+  # and test behaviour of conn structs
+  defmodule MockConnPersonAssigns do
+    defstruct auth_provider: "github", email: "test@test.com", id: 6, username: "username"
+  end
+
+  defmodule MockConnAssigns do
+    defstruct flash: %{}, jwt: "jwt", loggedin: true, person: %MockConnPersonAssigns{}
+  end
+
+  defmodule MockConn do
+    defstruct assigns: %MockConnAssigns{}
+  end
+
+
   test "atomize_map_keys/1 converts string keys to map" do
     map = %{"name" => "alex", id: 1}
     # IO.inspect(map, label: "map")
@@ -119,6 +135,11 @@ defmodule UsefulTest do
       assert Useful.get_in_default(map, [:data, :age]) == 17
     end
 
+    test "happy path 2" do
+      map = %{"name" => "alex", data: %{age: 17, benches: 200}}
+      assert Useful.get_in_default(map, ["name"]) == "alex"
+    end
+
     test "default when key not set" do
       map = %{"name" => "alex", data: %{age: 17, benches: 200}}
       assert Useful.get_in_default(map, [:data, :iq], 180) == 180
@@ -134,7 +155,14 @@ defmodule UsefulTest do
     end
 
     test "Plug.Conn does not implement the Access behaviour" do
-      conn = conn(:get, "/", "")
+      conn = %MockConn{}
+      map = MapFromDeepStruct.from_deep_struct(conn)
+
+      assert Useful.get_in_default(map, [:assigns, :person, :id], "default") == 6
+    end
+
+    test "Plug.Conn does not implement the Access behaviour with default value" do
+      conn = %MockConn{}
       assert Useful.get_in_default(conn, [:foo, :bar], 42) == 42
     end
   end

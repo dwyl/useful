@@ -101,17 +101,21 @@ defmodule Useful do
       "Happy!"
   """
   def get_in_default(map, keys, default \\ nil) do
-    # https://hexdocs.pm/elixir/1.14/Kernel.html#get_in/2
-    # Enum.each(keys, )
+
+    # Checking if it is a struct.
+    # If it is, we deeply convert it to map
+    map = case Kernel.is_struct(map) do
+      true -> MapFromDeepStruct.from_deep_struct(map)
+      false -> map
+    end
+
     try do
-      dbg(map)
       case get_in(map, keys) do
         nil -> default
         result -> result
       end
     rescue
-      any ->
-        dbg(any)
+      _any ->
         default
     end
   end
