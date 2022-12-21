@@ -138,7 +138,7 @@ and continues!
 
 
 > **Note**: Code inspired by:
-[stackoverflow.com/questions/48781427/optional-default-value-for-get-in](https://stackoverflow.com/questions/48781427/optional-default-value-for-get-in-access-behavior-elixir/48781493#48781493)
+[stackoverflow.com/questions/48781427/optional-default-value-for-get-in](https://stackoverflow.com/questions/48781427/optional-default-value-for-get-in-access-behavior-elixir/48781493#48781493) <br />
 All credit to [**`@PatNowak`**](https://github.com/PatNowak) 🙌
 
 The ideal syntax for this would be:
