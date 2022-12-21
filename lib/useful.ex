@@ -109,18 +109,9 @@ defmodule Useful do
       end
     rescue
       _ ->
-      default
+        default
     end
   end
-
-  # def get_in_default(map, keys_str, default \\ nil) when is_binary(keys_str) do
-  #   # expect a string in the format: "assigns.person.id"
-  #   keys =
-  #   case get_in(map, keys) do
-  #     nil -> default
-  #     result -> result
-  #   end
-  # end
 
   @doc """
   `stringy_map/1` converts a `Map` of any depth/nesting into a string.

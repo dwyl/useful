@@ -45,7 +45,7 @@ defmodule Useful.MixProject do
       {:pre_commit, "~> 0.3.4", only: :dev},
 
       # Plug helper functions: github.com/elixir-plug/plug
-      {:plug, "~> 1.10", only: [:dev, :test]},
+      {:plug, "~> 1.10", only: [:dev, :test]}
     ]
   end
 
