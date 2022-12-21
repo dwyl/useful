@@ -102,13 +102,16 @@ defmodule Useful do
   """
   def get_in_default(map, keys, default \\ nil) do
     # https://hexdocs.pm/elixir/1.14/Kernel.html#get_in/2
+    # Enum.each(keys, )
     try do
+      dbg(map)
       case get_in(map, keys) do
         nil -> default
         result -> result
       end
     rescue
-      _ ->
+      any ->
+        dbg(any)
         default
     end
   end
