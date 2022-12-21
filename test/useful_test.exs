@@ -114,17 +114,17 @@ defmodule UsefulTest do
 
   describe "get_in_default/3" do
     test "happy path" do
-      map = %{"name" => "alex", data: %{ age: 17, benches: 200}}
+      map = %{"name" => "alex", data: %{age: 17, benches: 200}}
       assert Useful.get_in_default(map, [:data, :age]) == 17
     end
 
     test "default when key not set" do
-      map = %{"name" => "alex", data: %{ age: 17, benches: 200}}
+      map = %{"name" => "alex", data: %{age: 17, benches: 200}}
       assert Useful.get_in_default(map, [:data, :iq], 180) == 180
     end
 
     test "default when no keys are defined" do
-      map = %{"name" => "alex", data: %{ age: 17, benches: 200}}
+      map = %{"name" => "alex", data: %{age: 17, benches: 200}}
       assert Useful.get_in_default(map, [:this, :that], 42) == 42
     end
 

@@ -97,11 +97,13 @@ defmodule Useful do
       17
       iex> Useful.get_in_default(map, [:data, :iq], 180)
       180
+      iex> Useful.get_in_default(nil, [:unhappy, :path], "Happy!")
+      "Happy!"
   """
   def get_in_default(map, keys, default \\ nil) do
     # https://hexdocs.pm/elixir/1.14/Kernel.html#get_in/2
     case get_in(map, keys) do
-      nil-> default
+      nil -> default
       result -> result
     end
   end
