@@ -102,11 +102,25 @@ defmodule Useful do
   """
   def get_in_default(map, keys, default \\ nil) do
     # https://hexdocs.pm/elixir/1.14/Kernel.html#get_in/2
-    case get_in(map, keys) do
-      nil -> default
-      result -> result
+    try do
+      case get_in(map, keys) do
+        nil -> default
+        result -> result
+      end
+    rescue
+      _ ->
+      default
     end
   end
+
+  # def get_in_default(map, keys_str, default \\ nil) when is_binary(keys_str) do
+  #   # expect a string in the format: "assigns.person.id"
+  #   keys =
+  #   case get_in(map, keys) do
+  #     nil -> default
+  #     result -> result
+  #   end
+  # end
 
   @doc """
   `stringy_map/1` converts a `Map` of any depth/nesting into a string.

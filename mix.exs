@@ -5,7 +5,7 @@ defmodule Useful.MixProject do
     [
       app: :useful,
       description: "A collection of useful functions",
-      version: "1.0.9",
+      version: "1.10.0",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -42,7 +42,10 @@ defmodule Useful.MixProject do
       {:ex_doc, "~> 0.29.0", only: :dev},
 
       # Git pre-commit hook: https://github.com/dwyl/elixir-pre-commit
-      {:pre_commit, "~> 0.3.4", only: :dev}
+      {:pre_commit, "~> 0.3.4", only: :dev},
+
+      # Plug helper functions: github.com/elixir-plug/plug
+      {:plug, "~> 1.10", only: [:dev, :test]},
     ]
   end
 

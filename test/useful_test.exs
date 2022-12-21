@@ -1,5 +1,6 @@
 defmodule UsefulTest do
   use ExUnit.Case, async: true
+  use Plug.Test
   doctest Useful
 
   test "atomize_map_keys/1 converts string keys to map" do
@@ -130,6 +131,11 @@ defmodule UsefulTest do
 
     test "really unhappy path still returns default value!" do
       assert Useful.get_in_default(nil, [:foo, :bar], 42) == 42
+    end
+
+    test "Plug.Conn does not implement the Access behaviour" do
+      conn = conn(:get, "/", "")
+      assert Useful.get_in_default(conn, [:foo, :bar], 42) == 42
     end
   end
 
