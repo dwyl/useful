@@ -101,17 +101,22 @@ defmodule Useful do
       "Happy!"
   """
   def get_in_default(map, keys, default \\ nil) do
+
     # Checking if it is a struct.
     # If it is, we deeply convert it to map
-    map =
-      case Kernel.is_struct(map) do
-        true -> MapFromDeepStruct.from_deep_struct(map)
-        false -> map
-      end
+    map = case Kernel.is_struct(map) do
+      true -> MapFromDeepStruct.from_deep_struct(map)
+      false -> map
+    end
 
-    case get_in(map, keys) do
-      nil -> default
-      result -> result
+    try do
+      case get_in(map, keys) do
+        nil -> default
+        result -> result
+      end
+    rescue
+      _any ->
+        default
     end
   end
 

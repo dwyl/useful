@@ -18,6 +18,7 @@ defmodule UsefulTest do
     defstruct assigns: %MockConnAssigns{}
   end
 
+
   test "atomize_map_keys/1 converts string keys to map" do
     map = %{"name" => "alex", id: 1}
     # IO.inspect(map, label: "map")
