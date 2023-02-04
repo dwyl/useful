@@ -4,7 +4,7 @@
 
 A collection of useful functions for building `Elixir` Apps.
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dwyl/gogs/Elixir%20CI?label=build&style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/useful/ci.yml?label=build&style=flat-square&branch=main)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/gogs/main.svg?style=flat-square)](http://codecov.io/github/dwyl/auth?branch=main)
 [![Hex.pm](https://img.shields.io/hexpm/v/useful?color=brightgreen&style=flat-square)](https://hex.pm/packages/useful)
 [![Libraries.io dependency status](https://img.shields.io/librariesio/release/hex/useful?logoColor=brightgreen&style=flat-square)](https://libraries.io/hex/useful)
@@ -44,7 +44,7 @@ Install by adding `useful` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:useful, "~> 1.0.8"}
+    {:useful, "~> 1.10.0"}
   ]
 end
 ```
@@ -94,6 +94,61 @@ iex(1)> :a.b
 ** (UndefinedFunctionError) function :a.b/0 is undefined (module :a is not available)
     :a.b()
 ```
+
+### `get_in_default/1`
+
+Get a deeply nested value from a map.
+`get_in_default/3` Proxies `Kernel.get_in/2`
+  but allows setting a `default` value as the 3rd argument.
+
+```elixir
+iex> map = %{name: "alex", detail: %{age: 17, height: 185}}
+iex> Useful.get_in_default(map, [:data, :age])
+17
+iex> Useful.get_in_default(map, [:data, :everything], "Awesome")
+"Awesome"
+iex> Useful.get_in_default(conn, [:assigns, :person, :id], 0)
+0
+```
+
+We needed this for getting `conn.assigns.person.id`
+in our [`App`](https://github.com/dwyl/mvp/)
+without having to write a bunch of boilerplate!
+e.g:
+
+```elixir
+person_id =
+  case Map.has_key?(conn.assigns, :person) do
+    false -> 0
+    true -> Map.get(conn.assigns.person, :id)
+  end
+```
+
+is just:
+
+```elixir
+person_id = Useful.get_in_default(conn, [:assigns, :person, :id], 0)
+```
+
+_Muuuuuuch cleaner/clearer_! 😍 
+If any of the keys in the list is not found
+it doesn't _explode_ with errors,
+simply returns the `default` value `0` 
+and continues!
+
+
+> **Note**: Code inspired by:
+[stackoverflow.com/questions/48781427/optional-default-value-for-get-in](https://stackoverflow.com/questions/48781427/optional-default-value-for-get-in-access-behavior-elixir/48781493#48781493) <br />
+All credit to [**`@PatNowak`**](https://github.com/PatNowak) 🙌
+
+The ideal syntax for this would be:
+```elixir
+person_id = conn.assigns.person.id || 0
+```
+But `Elixir` "_Me no likey_" ...
+So this is what we have.
+
+
 
 ### `stringify_map/1`
 

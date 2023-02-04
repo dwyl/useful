@@ -1,5 +1,6 @@
 defmodule UsefulTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
+  use Plug.Test
   doctest Useful
 
   test "atomize_map_keys/1 converts string keys to map" do
@@ -30,7 +31,7 @@ defmodule UsefulTest do
     # attempt to create deeply nested dir:
     File.mkdir_p(dir)
     write_files_in_dir("tmp")
-    # create file 
+    # create file
     write_files_in_dir(dir)
   end
 
@@ -110,6 +111,32 @@ defmodule UsefulTest do
              data__address__post_code: "20500",
              name: "Alex"
            }
+  end
+
+  describe "get_in_default/3" do
+    test "happy path" do
+      map = %{"name" => "alex", data: %{age: 17, benches: 200}}
+      assert Useful.get_in_default(map, [:data, :age]) == 17
+    end
+
+    test "default when key not set" do
+      map = %{"name" => "alex", data: %{age: 17, benches: 200}}
+      assert Useful.get_in_default(map, [:data, :iq], 180) == 180
+    end
+
+    test "default when no keys are defined" do
+      map = %{"name" => "alex", data: %{age: 17, benches: 200}}
+      assert Useful.get_in_default(map, [:this, :that], 42) == 42
+    end
+
+    test "really unhappy path still returns default value!" do
+      assert Useful.get_in_default(nil, [:foo, :bar], 42) == 42
+    end
+
+    test "Plug.Conn does not implement the Access behaviour" do
+      conn = conn(:get, "/", "")
+      assert Useful.get_in_default(conn, [:foo, :bar], 42) == 42
+    end
   end
 
   describe "stringfy_map/1" do
