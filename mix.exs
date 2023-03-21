@@ -33,7 +33,7 @@ defmodule Useful.MixProject do
   defp deps do
     [
       # Keep Code Tidy: https://github.com/rrrene/credo
-      {:credo, "~> 1.6.4", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.7.0", only: [:dev, :test], runtime: false},
 
       # track test coverage: https://github.com/parroty/excoveralls
       {:excoveralls, "~> 0.16.0", only: [:test, :dev]},
