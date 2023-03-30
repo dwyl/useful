@@ -17,6 +17,11 @@ defmodule Useful do
       %{name: "alex", data: %{age: 17}}
 
   """
+  def atomize_map_keys(%Date{} = value), do: value
+  def atomize_map_keys(%Time{} = value), do: value
+  def atomize_map_keys(%DateTime{} = value), do: value
+  def atomize_map_keys(%NaiveDateTime{} = value), do: value
+
   def atomize_map_keys(map) when is_map(map) do
     for {key, val} <- map, into: %{} do
       cond do
@@ -105,6 +110,7 @@ defmodule Useful do
     # Enum.each(keys, )
     try do
       dbg(map)
+
       case get_in(map, keys) do
         nil -> default
         result -> result
