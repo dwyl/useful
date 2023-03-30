@@ -16,6 +16,17 @@ defmodule UsefulTest do
     assert expected == %{id: 1, name: "alex", nested: %{age: 17, height: 185}}
   end
 
+  test "atomize_map_keys/1 handles Date, Time, DateTime and NaiveDateTime" do
+    map = %{
+      date: ~D[2023-03-30],
+      time: ~T[12:00:00],
+      naive_date_time: ~N[2023-03-30 12:00:00],
+      date_time: ~U[2023-03-30 12:00:00Z]
+    }
+
+    assert Useful.atomize_map_keys(map) == map
+  end
+
   defp write_files_in_dir(dir) do
     file_name = "test.txt"
     file_path = Path.join([dir, file_name]) |> Path.expand()
