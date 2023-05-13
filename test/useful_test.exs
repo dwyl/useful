@@ -34,8 +34,11 @@ defmodule UsefulTest do
         %{"text" => "camelCase", "backgroundColor" => "#9fe1e7"},
         %{"text" => "underscore_in_key", "inserted_at" => "2023-03-20T02:00:00Z"}
       ],
-      "name" => "alex", id: 1, nested: %{"age" => 17, height: 185}
+      "name" => "alex",
+      id: 1,
+      nested: %{"age" => 17, height: 185}
     }
+
     # dbg(map)
     actual = Useful.atomize_map_keys(map)
     # dbg(actual)
