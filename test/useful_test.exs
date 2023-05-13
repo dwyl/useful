@@ -27,6 +27,27 @@ defmodule UsefulTest do
     assert Useful.atomize_map_keys(map) == map
   end
 
+  test "atomize_map_keys/1 converts map containing list of maps" do
+    map = %{
+      "items" => [
+        %{"text" => "hello world", atom: "works"},
+        %{"text" => "camelCase", "backgroundColor" => "#9fe1e7"},
+        %{"text" => "underscore_in_key", "inserted_at" => "2023-03-20T02:00:00Z"}
+      ],
+      "name" => "alex", id: 1, nested: %{"age" => 17, height: 185}
+    }
+    # dbg(map)
+    actual = Useful.atomize_map_keys(map)
+    # dbg(actual)
+    first_item_actual = List.first(actual.items)
+    first_item_expected = %{text: "hello world", atom: "works"}
+    assert first_item_expected == first_item_actual
+
+    last_item_actual = List.last(actual.items)
+    last_item_expected = %{text: "underscore_in_key", inserted_at: "2023-03-20T02:00:00Z"}
+    assert last_item_expected == last_item_actual
+  end
+
   defp write_files_in_dir(dir) do
     file_name = "test.txt"
     file_path = Path.join([dir, file_name]) |> Path.expand()
