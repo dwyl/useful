@@ -22,6 +22,13 @@ defmodule Useful do
   def atomize_map_keys(%DateTime{} = value), do: value
   def atomize_map_keys(%NaiveDateTime{} = value), do: value
 
+  # handle lists in maps: github.com/dwyl/useful/issues/46
+  def atomize_map_keys(items) when is_list(items) do
+    for i <- items do
+      atomize_map_keys(i)
+    end
+  end
+
   def atomize_map_keys(map) when is_map(map) do
     for {key, val} <- map, into: %{} do
       cond do
