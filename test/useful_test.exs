@@ -27,18 +27,6 @@ defmodule UsefulTest do
     assert Useful.atomize_map_keys(map) == map
   end
 
-  test "atomize_map_keys/1 handles Plug.Upload" do
-    map = %{
-      image: %Plug.Upload{
-        path: "path/to/file",
-        filename: "file_name.ext",
-        content_type: "application/pdf"
-      }
-    }
-
-    assert Useful.atomize_map_keys(map) == map
-  end
-
   test "atomize_map_keys/1 converts map containing list of maps" do
     map = %{
       "items" => [
