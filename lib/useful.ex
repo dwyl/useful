@@ -21,6 +21,8 @@ defmodule Useful do
   def atomize_map_keys(%Time{} = value), do: value
   def atomize_map_keys(%DateTime{} = value), do: value
   def atomize_map_keys(%NaiveDateTime{} = value), do: value
+  # Avoid Plug.Upload.__struct__/0 is undefined compilation error useful/issues#52
+  # alias Plug.Upload
   def atomize_map_keys(%Plug.Upload{} = value), do: value
 
   # handle lists in maps: github.com/dwyl/useful/issues/46
