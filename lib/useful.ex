@@ -135,11 +135,11 @@ defmodule Useful do
   ## Examples
 
       iex> list = ["They'll", "never", "take", "our", "freedom!"]
-      iex> Useful.remove_item_from_list("never", list)
+      iex> Useful.remove_item_from_list(list, "never")
       ["They'll", "take", "our", "freedom!"]
 
   """
-  def remove_item_from_list(item, list) do
+  def remove_item_from_list(list, item) do
     if Enum.member?(list, item) do
       i = Enum.find_index(list, fn it -> it == item end)
       List.delete_at(list, i)

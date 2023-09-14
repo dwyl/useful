@@ -157,7 +157,7 @@ With numbers:
 
 ```elixir
 list = [1, 2, 3, 4]
-Useful.remove_item_from_list(3, list)
+Useful.remove_item_from_list(list, 3)
 [1, 2, 4]
 ```
 
@@ -165,10 +165,18 @@ With a `List` of `Strings`:
 
 ```elixir
 list = ["climate", "change", "is", "not", "real"]
-Useful.remove_item_from_list("not", list)
+Useful.remove_item_from_list(list, "not")
 ["climate", "change", "is", "real"]
 ```
 
+The `list` is the first argument to the function 
+so it's easy to pipe:
+
+```elixir
+get_list_of_items(person_id)
+|> Useful.remove_item_from_list("item_to_be_removed")
+|> etc.
+```
 
 
 ### `stringify_map/1`

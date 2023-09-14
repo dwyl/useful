@@ -190,25 +190,25 @@ defmodule UsefulTest do
     test "remove_item_from_list/2 removes a numeric item from a list" do
       list = [1, 2, 3, 4]
       # tl/1 = "tail of list" hexdocs.pm/elixir/1.15.5/Kernel.html#tl/1
-      assert Useful.remove_item_from_list(1, list) == tl(list)
+      assert Useful.remove_item_from_list(list, 1) == tl(list)
     end
 
     test "remove_item_from_list/2 removes a numeric item in any position" do
       list = [1, 2, 3, 4]
       updated_list = [1, 2, 4]
-      assert Useful.remove_item_from_list(3, list) == updated_list
+      assert Useful.remove_item_from_list(list, 3) == updated_list
     end
 
     test "remove_item_from_list/2 removes an item from the list" do
       list = ["don't", "panic", "about", "climate", "change"]
       # tl/1 = "tail of list" hexdocs.pm/elixir/1.15.5/Kernel.html#tl/1
-      assert Useful.remove_item_from_list("don't", list) == tl(list)
+      assert Useful.remove_item_from_list(list, "don't") == tl(list)
     end
 
     test "attempt to remove_item_from_list/2 ignores item *not* in list" do
       item = "save"
       list = ["AI", "will", "destroy", "us"]
-      assert Useful.remove_item_from_list(item, list) == list
+      assert Useful.remove_item_from_list(list, item) == list
     end
   end
 
