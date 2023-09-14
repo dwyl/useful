@@ -44,7 +44,7 @@ Install by adding `useful` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:useful, "~> 1.13.0"}
+    {:useful, "~> 1.13.1"}
   ]
 end
 ```
