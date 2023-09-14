@@ -131,6 +131,13 @@ defmodule Useful do
 
   @doc """
   `remove_item_from_list/2` removes a given `item` from a `list` in any position.
+
+  ## Examples
+
+      iex> list = ["They'll", "never", "take", "our", "freedom!"]
+      iex> Useful.remove_item_from_list("never", list)
+      ["They'll", "take", "our", "freedom!"]
+
   """
   def remove_item_from_list(item, list) do
     if Enum.member?(list, item) do
