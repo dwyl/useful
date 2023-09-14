@@ -119,15 +119,12 @@ defmodule Useful do
     # https://hexdocs.pm/elixir/1.14/Kernel.html#get_in/2
     # Enum.each(keys, )
     try do
-      dbg(map)
-
       case get_in(map, keys) do
         nil -> default
         result -> result
       end
     rescue
-      any ->
-        dbg(any)
+      _ ->
         default
     end
   end
@@ -136,6 +133,7 @@ defmodule Useful do
   `stringy_map/1` converts a `Map` of any depth/nesting into a string.
   Deeply nested maps are denoted by "__" (double underscore). See flatten_map/1
   for more details.
+  Alphabetizes the keys for consistency. See: github.com/dwyl/useful/issues/56
 
   ## Examples
 
@@ -149,6 +147,7 @@ defmodule Useful do
   def stringify_map(map) when is_map(map) do
     map
     |> flatten_map()
+    |> Enum.sort()
     |> Enum.map(&stringify_tuple/1)
     |> Enum.join(", ")
   end
