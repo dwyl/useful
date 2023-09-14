@@ -149,6 +149,27 @@ But `Elixir` "_Me no likey_" ...
 So this is what we have.
 
 
+### `remove_item_from_list/2`
+
+Remove an `item` from a `list`.
+
+With numbers:
+
+```elixir
+list = [1, 2, 3, 4]
+Useful.remove_item_from_list(3, list)
+[1, 2, 4]
+```
+
+With a `List` of `Strings`:
+
+```elixir
+list = ["climate", "change", "is", "not", "real"]
+Useful.remove_item_from_list("not", list)
+["climate", "change", "is", "real"]
+```
+
+
 
 ### `stringify_map/1`
 
