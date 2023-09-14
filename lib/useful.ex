@@ -130,6 +130,18 @@ defmodule Useful do
   end
 
   @doc """
+  `remove_item_from_list/2` removes a given `item` from a `list` in any position.
+  """
+  def remove_item_from_list(item, list) do
+    if Enum.member?(list, item) do
+      i = Enum.find_index(list, fn it -> it == item end)
+      List.delete_at(list, i)
+    else
+      list
+    end
+  end
+
+  @doc """
   `stringy_map/1` converts a `Map` of any depth/nesting into a string.
   Deeply nested maps are denoted by "__" (double underscore). See flatten_map/1
   for more details.
