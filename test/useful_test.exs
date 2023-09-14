@@ -186,6 +186,32 @@ defmodule UsefulTest do
     end
   end
 
+  describe "remove_item_from_list/2" do
+    test "remove_item_from_list/2 removes a numeric item from a list" do
+      list = [1, 2, 3, 4]
+      # tl/1 = "tail of list" hexdocs.pm/elixir/1.15.5/Kernel.html#tl/1
+      assert Useful.remove_item_from_list(list, 1) == tl(list)
+    end
+
+    test "remove_item_from_list/2 removes a numeric item in any position" do
+      list = [1, 2, 3, 4]
+      updated_list = [1, 2, 4]
+      assert Useful.remove_item_from_list(list, 3) == updated_list
+    end
+
+    test "remove_item_from_list/2 removes an item from the list" do
+      list = ["don't", "panic", "about", "climate", "change"]
+      # tl/1 = "tail of list" hexdocs.pm/elixir/1.15.5/Kernel.html#tl/1
+      assert Useful.remove_item_from_list(list, "don't") == tl(list)
+    end
+
+    test "attempt to remove_item_from_list/2 ignores item *not* in list" do
+      item = "save"
+      list = ["AI", "will", "destroy", "us"]
+      assert Useful.remove_item_from_list(list, item) == list
+    end
+  end
+
   describe "stringfy_map/1" do
     test "returns nil string when map is nil" do
       assert Useful.stringify_map(nil) == "nil"
@@ -197,8 +223,8 @@ defmodule UsefulTest do
     end
 
     test "converts nested maps into strings" do
-      map = %{id: 1, data: %{name: "Vitor", other: %{data: "info"}}}
-      assert Useful.stringify_map(map) == "data__name: Vitor, data__other__data: info, id: 1"
+      map = %{id: 1, data: %{name: "Vitor", nested: %{data: "info"}}}
+      assert Useful.stringify_map(map) == "data__name: Vitor, data__nested__data: info, id: 1"
     end
 
     test "converts nested lists into strings" do

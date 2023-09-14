@@ -44,7 +44,7 @@ Install by adding `useful` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:useful, "~> 1.12.1"}
+    {:useful, "~> 1.13.1"}
   ]
 end
 ```
@@ -148,6 +148,35 @@ person_id = conn.assigns.person.id || 0
 But `Elixir` "_Me no likey_" ...
 So this is what we have.
 
+
+### `remove_item_from_list/2`
+
+Remove an `item` from a `list`.
+
+With numbers:
+
+```elixir
+list = [1, 2, 3, 4]
+Useful.remove_item_from_list(list, 3)
+[1, 2, 4]
+```
+
+With a `List` of `Strings`:
+
+```elixir
+list = ["climate", "change", "is", "not", "real"]
+Useful.remove_item_from_list(list, "not")
+["climate", "change", "is", "real"]
+```
+
+The `list` is the first argument to the function 
+so it's easy to pipe:
+
+```elixir
+get_list_of_items(person_id)
+|> Useful.remove_item_from_list("item_to_be_removed")
+|> etc.
+```
 
 
 ### `stringify_map/1`

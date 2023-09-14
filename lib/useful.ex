@@ -119,16 +119,32 @@ defmodule Useful do
     # https://hexdocs.pm/elixir/1.14/Kernel.html#get_in/2
     # Enum.each(keys, )
     try do
-      dbg(map)
-
       case get_in(map, keys) do
         nil -> default
         result -> result
       end
     rescue
-      any ->
-        dbg(any)
+      _ ->
         default
+    end
+  end
+
+  @doc """
+  `remove_item_from_list/2` removes a given `item` from a `list` in any position.
+
+  ## Examples
+
+      iex> list = ["They'll", "never", "take", "our", "freedom!"]
+      iex> Useful.remove_item_from_list(list, "never")
+      ["They'll", "take", "our", "freedom!"]
+
+  """
+  def remove_item_from_list(list, item) do
+    if Enum.member?(list, item) do
+      i = Enum.find_index(list, fn it -> it == item end)
+      List.delete_at(list, i)
+    else
+      list
     end
   end
 
@@ -136,6 +152,7 @@ defmodule Useful do
   `stringy_map/1` converts a `Map` of any depth/nesting into a string.
   Deeply nested maps are denoted by "__" (double underscore). See flatten_map/1
   for more details.
+  Alphabetizes the keys for consistency. See: github.com/dwyl/useful/issues/56
 
   ## Examples
 
@@ -149,6 +166,7 @@ defmodule Useful do
   def stringify_map(map) when is_map(map) do
     map
     |> flatten_map()
+    |> Enum.sort()
     |> Enum.map(&stringify_tuple/1)
     |> Enum.join(", ")
   end
