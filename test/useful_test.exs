@@ -3,11 +3,10 @@ defmodule UsefulTest do
   use Plug.Test
   doctest Useful
 
-  test "make_unique_keys/1 makes unique keys" do
+  test "list_tuples_to_unique_keys/1 makes unique keys" do
     parts = [{"file", 1, "a"}, {"file", 2, "b"}, {"file", 3, "c"}]
-
-    assert Useful.make_unique_keys(parts) |> Enum.sort() ==
-             [{"file-1", 1, "a"}, {"file-2", 2, "b"}, {"file-3", 3, "c"}]
+    expected = [{"file-1", 1, "a"}, {"file-2", 2, "b"}, {"file-3", 3, "c"}]
+    assert Useful.list_tuples_to_unique_keys(parts) == expected
   end
 
   test "atomize_map_keys/1 converts string keys to map" do

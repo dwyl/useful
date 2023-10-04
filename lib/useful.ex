@@ -287,18 +287,18 @@ defmodule Useful do
   end
 
   @doc """
-  `make_unique_keys/1` turns a list of tuples with the same key into a list of tuples with a unique key.
+  `list_tuples_to_unique_keys/1` turns a list of tuples with the same key into a list of tuples with a unique key.
 
   Useful when you deal with "multipart".
 
   ## Example
 
       iex> parts = [{"file", "header", "pic1.png"}, {"file", "header", "pic2.png"}]
-      iex> Useful.make_unique_keys(parts)
-      [{"file-2", "header", "pic2.png"}, {"file-1", "header", "pic1.png"}]
+      iex> Useful.list_tuples_to_unique_keys(parts)
+      [{"file-1", "header", "pic1.png"}, {"file-2", "header", "pic2.png"}]
   """
 
-  def make_unique_keys(parts) do
+  def list_tuples_to_unique_keys(parts) do
     key = parts |> hd() |> elem(0)
     new_keys = Enum.map(1..length(parts), &(key <> "-#{&1}"))
 
@@ -308,6 +308,7 @@ defmodule Useful do
         | acc
       ]
     end)
+    |> Enum.sort()
   end
 
   # No idea how to test this. Do you? ¯\_(ツ)_/¯
