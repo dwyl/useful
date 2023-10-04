@@ -44,7 +44,7 @@ Install by adding `useful` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:useful, "~> 1.13.1"}
+    {:useful, "~> 1.14.0"}
   ]
 end
 ```
@@ -147,6 +147,20 @@ person_id = conn.assigns.person.id || 0
 ```
 But `Elixir` "_Me no likey_" ...
 So this is what we have.
+
+### `list_tuple_to_unique_keys/1`
+
+Turns a list of tuples with the _same_ key 
+into a list of tuples with _unique_ keys.
+Useful when dealing with "multipart" forms 
+that upload multiple files. e.g:
+
+```elixir
+parts = [{"file", "pic1.png"}, {"file", "pic2.png"}]
+Useful.list_tuples_to_unique_keys(parts)
+[{"file-1", "pic1.png"}, {"file-2", "pic2.png"}]
+```
+
 
 
 ### `remove_item_from_list/2`
