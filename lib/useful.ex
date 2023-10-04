@@ -130,6 +130,30 @@ defmodule Useful do
   end
 
   @doc """
+  `list_tuples_to_unique_keys/1` turns a list of tuples
+  with the same key into a list of tuples with unique keys.
+  Useful when dealing with "multipart" forms that upload multiple files.
+
+  ## Example
+
+      iex> parts = [{"file", "header", "pic1.png"}, {"file", "header", "pic2.png"}]
+      iex> Useful.list_tuples_to_unique_keys(parts)
+      [{"file-1", "header", "pic1.png"}, {"file-2", "header", "pic2.png"}]
+  """
+  def list_tuples_to_unique_keys(parts) do
+    key = parts |> hd() |> elem(0)
+    new_keys = Enum.map(1..length(parts), &(key <> "-#{&1}"))
+
+    Enum.zip_reduce([parts, new_keys], [], fn [elt, new_key], acc ->
+      [
+        elt |> Tuple.delete_at(0) |> Tuple.insert_at(0, new_key)
+        | acc
+      ]
+    end)
+    |> Enum.sort()
+  end
+
+  @doc """
   `remove_item_from_list/2` removes a given `item` from a `list` in any position.
 
   ## Examples
@@ -284,31 +308,6 @@ defmodule Useful do
 
   for type <- types do
     def typeof(x) when unquote(:"is_#{type}")(x), do: unquote(type)
-  end
-
-  @doc """
-  `list_tuples_to_unique_keys/1` turns a list of tuples with the same key into a list of tuples with a unique key.
-
-  Useful when you deal with "multipart".
-
-  ## Example
-
-      iex> parts = [{"file", "header", "pic1.png"}, {"file", "header", "pic2.png"}]
-      iex> Useful.list_tuples_to_unique_keys(parts)
-      [{"file-1", "header", "pic1.png"}, {"file-2", "header", "pic2.png"}]
-  """
-
-  def list_tuples_to_unique_keys(parts) do
-    key = parts |> hd() |> elem(0)
-    new_keys = Enum.map(1..length(parts), &(key <> "-#{&1}"))
-
-    Enum.zip_reduce([parts, new_keys], [], fn [elt, new_key], acc ->
-      [
-        elt |> Tuple.delete_at(0) |> Tuple.insert_at(0, new_key)
-        | acc
-      ]
-    end)
-    |> Enum.sort()
   end
 
   # No idea how to test this. Do you? ¯\_(ツ)_/¯

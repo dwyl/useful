@@ -244,7 +244,7 @@ defmodule UsefulTest do
       assert Useful.typeof(:atom) == "atom"
     end
 
-    #  recap: https://elixir-lang.org/getting-started/binaries-strings-and-char-lists.html
+    #  recap: https://elixir-lang.org/getting-started/binaries-strings-and-char-lists.html
     test "returns \"binary\" when variable is a binary" do
       string = "hello"
       assert Useful.typeof(string) == "binary"
