@@ -4,8 +4,32 @@ defmodule UsefulTest do
   doctest Useful
 
   test "list_tuples_to_unique_keys/1 makes unique keys" do
-    parts = [{"file", 1, "a"}, {"file", 2, "b"}, {"file", 3, "c"}]
-    expected = [{"file-1", 1, "a"}, {"file-2", 2, "b"}, {"file-3", 3, "c"}]
+    parts = [
+      {"files",
+       [
+         {"content-type", "image/png"},
+         {"content-disposition", "form-data; name=\"files\"; filename=\"first.png\""}
+       ], %Plug.Upload{path: "..", content_type: "image/png", filename: "first.png"}},
+      {"files",
+       [
+         {"content-type", "image/webp"},
+         {"content-disposition", "form-data; name=\"files\"; filename=\"second.webp\""}
+       ], %Plug.Upload{path: "...", content_type: "image/webp", filename: "second.webp"}}
+    ]
+
+    expected = [
+      {"files-1",
+       [
+         {"content-type", "image/png"},
+         {"content-disposition", "form-data; name=\"files\"; filename=\"first.png\""}
+       ], %Plug.Upload{path: "..", content_type: "image/png", filename: "first.png"}},
+      {"files-2",
+       [
+         {"content-type", "image/webp"},
+         {"content-disposition", "form-data; name=\"files\"; filename=\"second.webp\""}
+       ], %Plug.Upload{path: "...", content_type: "image/webp", filename: "second.webp"}}
+    ]
+
     assert Useful.list_tuples_to_unique_keys(parts) == expected
   end
 

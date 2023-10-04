@@ -99,7 +99,7 @@ iex(1)> :a.b
 
 Get a deeply nested value from a map.
 `get_in_default/3` Proxies `Kernel.get_in/2`
-  but allows setting a `default` value as the 3rd argument.
+but allows setting a `default` value as the 3rd argument.
 
 ```elixir
 iex> map = %{name: "alex", detail: %{age: 17, height: 185}}
@@ -130,38 +130,45 @@ is just:
 person_id = Useful.get_in_default(conn, [:assigns, :person, :id], 0)
 ```
 
-_Muuuuuuch cleaner/clearer_! 😍 
+_Muuuuuuch cleaner/clearer_! 😍
 If any of the keys in the list is not found
 it doesn't _explode_ with errors,
-simply returns the `default` value `0` 
+simply returns the `default` value `0`
 and continues!
 
-
 > **Note**: Code inspired by:
-[stackoverflow.com/questions/48781427/optional-default-value-for-get-in](https://stackoverflow.com/questions/48781427/optional-default-value-for-get-in-access-behavior-elixir/48781493#48781493) <br />
-All credit to [**`@PatNowak`**](https://github.com/PatNowak) 🙌
+> [stackoverflow.com/questions/48781427/optional-default-value-for-get-in](https://stackoverflow.com/questions/48781427/optional-default-value-for-get-in-access-behavior-elixir/48781493#48781493) <br />
+> All credit to [**`@PatNowak`**](https://github.com/PatNowak) 🙌
 
 The ideal syntax for this would be:
+
 ```elixir
 person_id = conn.assigns.person.id || 0
 ```
+
 But `Elixir` "_Me no likey_" ...
 So this is what we have.
 
 ### `list_tuple_to_unique_keys/1`
 
-Turns a list of tuples with the _same_ key 
+Turns a list of tuples with the _same_ key
 into a list of tuples with _unique_ keys.
-Useful when dealing with "multipart" forms 
+Useful when dealing with "multipart" forms
 that upload multiple files. e.g:
 
 ```elixir
-parts = [{"file", "pic1.png"}, {"file", "pic2.png"}]
-Useful.list_tuples_to_unique_keys(parts)
-[{"file-1", "pic1.png"}, {"file-2", "pic2.png"}]
+parts = [
+  {"files",[{"content-type", "image/png"},{"content-disposition","form-data; name=\"files\"; filename=\"first.png\""}],%Plug.Upload{path: "..", content_type: "image/png",filename: "first.png"}},
+  {"files",[{"content-type", "image/webp"},{"content-disposition","form-data; name=\"files\"; filename=\"second.webp\""}],%Plug.Upload{path: "...",content_type: "image/webp",filename: "second.webp"}}
+]
+
+
+Useful.list_tuples_to_unique_keys(parts) =
+[
+  {"files-1",[{"content-type", "image/png"},{"content-disposition","form-data; name=\"files\"; filename=\"first.png\""}],%Plug.Upload{path: "..", content_type: "image/png",filename: "first.png"}},
+  {"files-2",[{"content-type", "image/webp"},{"content-disposition","form-data; name=\"files\"; filename=\"second.webp\""}],%Plug.Upload{path: "...",content_type: "image/webp",filename: "second.webp"}}
+]
 ```
-
-
 
 ### `remove_item_from_list/2`
 
@@ -183,7 +190,7 @@ Useful.remove_item_from_list(list, "not")
 ["climate", "change", "is", "real"]
 ```
 
-The `list` is the first argument to the function 
+The `list` is the first argument to the function
 so it's easy to pipe:
 
 ```elixir
@@ -191,7 +198,6 @@ get_list_of_items(person_id)
 |> Useful.remove_item_from_list("item_to_be_removed")
 |> etc.
 ```
-
 
 ### `stringify_map/1`
 
