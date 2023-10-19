@@ -36,7 +36,7 @@ defmodule Useful.MixProject do
       {:credo, "~> 1.7.0", only: [:dev, :test], runtime: false},
 
       # track test coverage: https://github.com/parroty/excoveralls
-      {:excoveralls, "~> 0.17.0", only: [:test, :dev]},
+      {:excoveralls, "~> 0.18.0", only: [:test, :dev]},
 
       # Create Documentation Hex.docs: https://hex.pm/packages/ex_doc
       {:ex_doc, "~> 0.30.1", only: :dev},
