@@ -214,6 +214,15 @@ defmodule Useful do
     "#{key}: #{value}"
   end
 
+  @doc """
+  `is_valid_url?/1` checks if a string is a valid URL.
+  """
+  def is_valid_url?(string) do
+    [:scheme, :host, :port]
+    |> Enum.map(&Map.get(URI.parse(string), &1))
+    |> Enum.all?()
+  end
+
   # Recap: https://elixir-lang.org/getting-started/basic-types.html#tuples
   defp to_list_of_tuples(map) do
     map
