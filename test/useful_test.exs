@@ -330,4 +330,17 @@ defmodule UsefulTest do
       assert Useful.typeof(tuple) == "tuple"
     end
   end
+
+  describe "is_valid_url?/1" do
+    test "are URL valid" do
+      assert Useful.is_valid_url?("http://www.google.com") == true
+      assert Useful.is_valid_url?("http//google.com") == false
+      assert Useful.is_valid_url?("ftp://google.com") == true
+      assert Useful.is_valid_url?("https://google.com/api&url=ok") == true
+      assert Useful.is_valid_url?("http://localhost:3000") == true
+      assert Useful.is_valid_url?("https://localhost") == true
+      assert Useful.is_valid_url?("htt:/google") == false
+      assert Useful.is_valid_url?("www.google.com") == false
+    end
+  end
 end
