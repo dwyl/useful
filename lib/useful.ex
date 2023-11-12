@@ -216,6 +216,8 @@ defmodule Useful do
 
   @doc """
   `is_valid_url?/1` checks if a string is a valid URL.
+  A valid URL starts with a `scheme` (e.g. `http://` or `https://`),
+  so strings that start with "www" are considered invalid.
   """
   def is_valid_url?(string) do
     [:scheme, :host, :port]
