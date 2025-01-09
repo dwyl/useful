@@ -263,6 +263,27 @@ defmodule UsefulTest do
     end
   end
 
+  describe "truncate/3" do
+    test "truncates the string to the desired length and adds '...' " do
+
+    end
+
+    test "Returns the first argument unmodified if NOT a String" do
+      # don't attempt to truncate an atom:
+      assert Useful.truncate(:notstring, 42) == :notstring
+    end
+
+    test "Returns the first argument unmodified if length NOT number" do
+      # don't attempt to truncate if length is not numeric:
+      assert Useful.truncate("hello", :not_number) == "hello"
+    end
+
+    test "Returns the first argument unmodified if char NOT binary" do
+      # don't attempt to truncate if length is not numeric:
+      assert Useful.truncate("Hello Alex!", 42, :cat) == "Hello Alex!"
+    end
+  end
+
   describe "typeof/1" do
     test "returns \"atom\" for an :atom" do
       assert Useful.typeof(:atom) == "atom"

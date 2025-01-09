@@ -242,8 +242,41 @@ defmodule Useful do
   end
 
   @doc """
-  `typeof/1` returns the type of a vairable.
-  Inspired by stackoverflow.com/questions/28377135/check-typeof-variable-in-elixir
+  `truncate/3` truncates a `String` to the desired `length` (`Number`).
+  The _optional_ third parameter
+
+  Inspired by: stackoverflow.com/questions/39394916/how-truncate-string-elixir
+
+  ## Examples
+
+  """
+  def truncate(string, length, char \\ "...") # Header
+  def truncate(string, _length, _char) when not is_binary(string) do
+    # IO.inspect("#{string} is #{typeof(string)} NOT binary")
+    # return the input unmodified
+    string
+  end
+
+  def truncate(string, length, _char) when not is_number(length) do
+    # IO.inspect("#{length} is #{typeof(length)} NOT Number")
+    # return the input unmodified
+    string
+  end
+
+  def truncate(string, _length, char) when not is_binary(char) do
+    # IO.inspect("#{length} is #{typeof(length)} NOT Number")
+    # return the input unmodified
+    string
+  end
+
+  def truncate(string, length, char) do
+    IO.inspect("String #{string} is_binary, length: #{length}, char: #{char}")
+    string
+  end
+
+  @doc """
+  `typeof/1` returns the type of a variable.
+  Inspired by stackoverflow.com/questions/28377135/check-typeof-variable-elixir
 
   ## Examples
 
