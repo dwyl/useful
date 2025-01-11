@@ -254,8 +254,8 @@ defmodule Useful do
   ## Examples
 
       iex> input = "A room without books is like a body without a soul."
-      iex> Useful.truncate(input, 42)
-      "A room without books is like a body without a soul."
+      iex> Useful.truncate(input, 29)
+      "A room without books is like..."
 
   """
   # Header with default value for terminator
@@ -277,10 +277,7 @@ defmodule Useful do
   end
 
   def truncate(input, length, terminator) do
-    IO.inspect("String #{input} length: #{length}, terminator: #{terminator}")
-
-    # length_minus_1 = length - 1
-
+    # IO.inspect("String #{input} length: #{length}, terminator: #{terminator}")
     cond do
       # avoid processing invalid binaries, return input early:
       !String.valid?(input) -> # hexdocs.pm/elixir/1.12/String.html#valid?/1
@@ -292,10 +289,30 @@ defmodule Useful do
 
       # input is valid and longer than `length`, attempt to truncate it:
       true ->
-        # find the last whitespace character nearest (before) length:
-        Regex.scan(~r/\p{Zs}/u, input) |> dbg()
+        # Slice the input string at the end of `length`:
+        sliced = String.slice(input, 0..length-1)
+        # dbg(sliced)
+        # Get character at the position of `length` in the input string:
+        char_at = String.at(input, length)
+        # IO.puts(" ----> char_at: #{char_at}")
+        # Check if character at end of the truncated string is whitespace:
+        sliced = if Regex.match?(~r/\p{Zs}/u, char_at) do
+          sliced
+        else
+          # Character at the end of the truncated string is NOT whitespace
+          # since we don't want to cut a word in half, we instead find a space.
+          # Find the last whitespace character nearest (before) `length`:
+          # Regex from: https://elixirforum.com/t/detect-char-whitespace/26735/5
+          # Try it in iex:
+          # > Regex.scan(~r/\p{Zs}/u, "foo bar baz", return: :index)
+          # > [[{3, 1}], [{7, 1}]]
+          [{index, _}] = Regex.scan(~r/\p{Zs}/u, sliced, return: :index)
+          |> List.last()
 
+          String.slice(input, 0..index-1)
+        end
 
+        "#{sliced}#{terminator}"
     end
   end
 

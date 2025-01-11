@@ -286,9 +286,25 @@ defmodule UsefulTest do
       assert Useful.truncate(<<0xFFFF::16>>, 42, "") == <<0xFFFF::16>>
     end
 
-    test "Returns the truncated string" do
+    test "Don't truncate if input is less than length" do
+      assert Useful.truncate("Hello World!", 42) == "Hello World!"
+    end
+
+    test "Don't truncate mid-word, find the previous whitespace" do
+      input = "It's supercalifragilisticexpialidocious"
+      truncated = Useful.truncate(input, 24)
+      assert truncated == "It's..."
+    end
+
+    test "Returns the truncated string WITH trailing ellipsis" do
+      input = "It was a bright cold day in April, and the clocks were striking"
+      truncated = Useful.truncate(input, 24)
+      assert truncated == "It was a bright cold day..."
+    end
+
+    test "Returns the truncated string WITHOUT trailing ellipsis" do
       input = "Three things were happening inside the Park on that Saturday"
-      truncated = Useful.truncate(input, 27, "") |> dbg()
+      truncated = Useful.truncate(input, 27, "")
       assert truncated == "Three things were happening"
     end
   end
