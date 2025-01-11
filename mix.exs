@@ -17,7 +17,8 @@ defmodule Useful.MixProject do
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.json": :test,
-        "coveralls.html": :test
+        "coveralls.html": :test,
+        t: :test
       ]
     ]
   end
@@ -63,7 +64,8 @@ defmodule Useful.MixProject do
 
   defp aliases do
     [
-      c: ["coveralls.html"]
+      c: ["coveralls.html"],
+      t: ["test"]
     ]
   end
 end

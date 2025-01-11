@@ -265,7 +265,6 @@ defmodule UsefulTest do
 
   describe "truncate/3" do
     test "truncates the string to the desired length and adds '...' " do
-
     end
 
     test "Returns the first argument unmodified if NOT a String" do
@@ -281,6 +280,16 @@ defmodule UsefulTest do
     test "Returns the first argument unmodified if char NOT binary" do
       # don't attempt to truncate if length is not numeric:
       assert Useful.truncate("Hello Alex!", 42, :cat) == "Hello Alex!"
+    end
+
+    test "Returns early if input is not a valid string e.g: <<0xFFFF::16>>" do
+      assert Useful.truncate(<<0xFFFF::16>>, 42, "") == <<0xFFFF::16>>
+    end
+
+    test "Returns the truncated string" do
+      input = "Three things were happening inside the Park on that Saturday"
+      truncated = Useful.truncate(input, 27, "") |> dbg()
+      assert truncated == "Three things were happening"
     end
   end
 

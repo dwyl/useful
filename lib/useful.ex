@@ -243,36 +243,63 @@ defmodule Useful do
 
   @doc """
   `truncate/3` truncates a `String` to the desired `length` (`Number`).
-  The _optional_ third parameter
+  _Optional_ third param `terminator` defines what comes after truncated text.
+  The default is "..." but any alternative can be defined; see examples below.
 
-  Inspired by: stackoverflow.com/questions/39394916/how-truncate-string-elixir
+  Don't cut a string mid-word e.g: "I like to eat shiitaki mushrooms"
+  should not be truncated to "I like to eat shiit..."
+  Rather, it should truncate to: "I like to eat ..."
+  I'm sure you can think of more examples, but you get the idea.
 
   ## Examples
 
+      iex> input = "A room without books is like a body without a soul."
+      iex> Useful.truncate(input, 42)
+      "A room without books is like a body without a soul."
+
   """
-  def truncate(string, length, char \\ "...") # Header
-  def truncate(string, _length, _char) when not is_binary(string) do
-    # IO.inspect("#{string} is #{typeof(string)} NOT binary")
+  # Header with default value for terminator
+  def truncate(input, length, terminator \\ "...")
+
+  def truncate(input, _length, _terminator) when not is_binary(input) do
     # return the input unmodified
-    string
+    input
   end
 
-  def truncate(string, length, _char) when not is_number(length) do
-    # IO.inspect("#{length} is #{typeof(length)} NOT Number")
-    # return the input unmodified
-    string
+  def truncate(input, length, _terminator) when not is_number(length) do
+    # return the input unmodified if length is NOT a number
+    input
   end
 
-  def truncate(string, _length, char) when not is_binary(char) do
-    # IO.inspect("#{length} is #{typeof(length)} NOT Number")
+  def truncate(input, _length, terminator) when not is_binary(terminator) do
     # return the input unmodified
-    string
+    input
   end
 
-  def truncate(string, length, char) do
-    IO.inspect("String #{string} is_binary, length: #{length}, char: #{char}")
-    string
+  def truncate(input, length, terminator) do
+    IO.inspect("String #{input} length: #{length}, terminator: #{terminator}")
+
+    # length_minus_1 = length - 1
+
+    cond do
+      # avoid processing invalid binaries, return input early:
+      !String.valid?(input) -> # hexdocs.pm/elixir/1.12/String.html#valid?/1
+        input
+
+      # input is less than length, return full input early:
+      String.length(input) <= length ->
+        input
+
+      # input is valid and longer than `length`, attempt to truncate it:
+      true ->
+        # find the last whitespace character nearest (before) length:
+        Regex.scan(~r/\p{Zs}/u, input) |> dbg()
+
+
+    end
   end
+
+
 
   @doc """
   `typeof/1` returns the type of a variable.

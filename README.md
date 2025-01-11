@@ -219,6 +219,15 @@ iex> Useful.stringify_tuple(tuple)
 "ok: example"
 ```
 
+### `truncate/3`
+
+> **truncate**; To shorten (something) by, or as if by, cutting part of it off.
+> [wiktionary.org/wiki/truncate](https://en.wiktionary.org/wiki/truncate)
+
+Returns a truncated version of the `String` according to the desired `length`.
+
+
+
 ### `typeof/1`
 
 Returns the type of a variable, e.g: "function" or "integer"
