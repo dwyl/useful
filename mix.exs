@@ -4,8 +4,8 @@ defmodule Useful.MixProject do
   def project do
     [
       app: :useful,
-      description: "A collection of useful functions",
-      version: "1.14.0",
+      description: "A collection of useful functions for building Elixir apps.",
+      version: "1.15.0",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -47,7 +47,7 @@ defmodule Useful.MixProject do
 
       # Plug helper functions: github.com/elixir-plug/plug
       # Used for %Plug.Upload{} Struct see: #49 & #52
-      {:plug, "~> 1.14"}
+      {:plug, "~> 1.16"}
     ]
   end
 
