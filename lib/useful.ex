@@ -6,7 +6,7 @@ defmodule Useful do
   @doc """
   `atomize_map_keys/1` converts a `Map` with different keys
   to a map with just atom keys. Works recursively for nested maps.
-  Inspired by stackoverflow.com/questions/31990134
+  Inspired by https://stackoverflow.com/questions/31990134
 
   ## Examples
 
@@ -21,11 +21,13 @@ defmodule Useful do
   def atomize_map_keys(%Time{} = value), do: value
   def atomize_map_keys(%DateTime{} = value), do: value
   def atomize_map_keys(%NaiveDateTime{} = value), do: value
-  # Avoid Plug.Upload.__struct__/0 is undefined compilation error useful/issues#52
+  # Avoid Plug.Upload.__struct__/0 is undefined compilation error
+  # [useful#52](https://github.com/dwyl/useful/issues/52)
   # alias Plug.Upload
   def atomize_map_keys(%Plug.Upload{} = value), do: value
 
-  # handle lists in maps: github.com/dwyl/useful/issues/46
+  # handle lists in maps:
+  # [useful#46](https://github.com/dwyl/useful/issues/46)
   def atomize_map_keys(items) when is_list(items) do
     for i <- items do
       atomize_map_keys(i)
@@ -176,7 +178,8 @@ defmodule Useful do
   `stringy_map/1` converts a `Map` of any depth/nesting into a string.
   Deeply nested maps are denoted by "__" (double underscore). See flatten_map/1
   for more details.
-  Alphabetizes the keys for consistency. See: github.com/dwyl/useful/issues/56
+  Alphabetizes the keys for consistency.
+  See: [useful#56](https://github.com/dwyl/useful/issues/56)
 
   ## Examples
 
@@ -242,7 +245,7 @@ defmodule Useful do
   end
 
   @doc """
-  `truncate/3` truncates a `String` to the desired `length` (`Number`).
+  `truncate/3` truncates an `input` (`String`) to desired `length` (`Number`).
   _Optional_ third param `terminator` defines what comes after truncated text.
   The default is "..." but any alternative can be defined; see examples below.
 
@@ -306,7 +309,7 @@ defmodule Useful do
             # Character at the end of the truncated string is NOT whitespace
             # since we don't want to cut a word in half, we instead find a space.
             # Find the last whitespace character nearest (before) `length`:
-            # Regex from: https://elixirforum.com/t/detect-char-whitespace/26735/5
+            # Regex: https://elixirforum.com/t/detect-char-whitespace/26735/5
             # Try it in iex:
             # > Regex.scan(~r/\p{Zs}/u, "foo bar baz", return: :index)
             # > [[{3, 1}], [{7, 1}]]
@@ -323,7 +326,7 @@ defmodule Useful do
 
   @doc """
   `typeof/1` returns the type of a variable.
-  Inspired by stackoverflow.com/questions/28377135/check-typeof-variable-elixir
+  Inspired by https://stackoverflow.com/questions/28377135/typeof-var-elixir
 
   ## Examples
 
