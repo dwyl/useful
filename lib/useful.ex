@@ -257,6 +257,10 @@ defmodule Useful do
       iex> Useful.truncate(input, 29)
       "A room without books is like..."
 
+      iex> input = "do or do not there is no try"
+      iex> Useful.truncate(input, 12, "") # no ellipsis
+      "do or do not"
+
   """
   # Header with default value for terminator
   def truncate(input, length, terminator \\ "...")
@@ -277,7 +281,6 @@ defmodule Useful do
   end
 
   def truncate(input, length, terminator) do
-    # IO.inspect("String #{input} length: #{length}, terminator: #{terminator}")
     cond do
       # avoid processing invalid binaries, return input early:
       # hexdocs.pm/elixir/1.12/String.html#valid?/1
@@ -295,7 +298,6 @@ defmodule Useful do
         # dbg(sliced)
         # Get character at the position of `length` in the input string:
         char_at = String.at(input, length)
-        # IO.puts(" ----> char_at: #{char_at}")
         # Check if character at end of the truncated string is whitespace:
         sliced =
           if Regex.match?(~r/\p{Zs}/u, char_at) do
