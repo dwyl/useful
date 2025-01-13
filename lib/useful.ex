@@ -6,7 +6,7 @@ defmodule Useful do
   @doc """
   `atomize_map_keys/1` converts a `Map` with different keys
   to a map with just atom keys. Works recursively for nested maps.
-  Inspired by stackoverflow.com/questions/31990134
+  Inspired by https://stackoverflow.com/questions/31990134
 
   ## Examples
 
@@ -21,11 +21,13 @@ defmodule Useful do
   def atomize_map_keys(%Time{} = value), do: value
   def atomize_map_keys(%DateTime{} = value), do: value
   def atomize_map_keys(%NaiveDateTime{} = value), do: value
-  # Avoid Plug.Upload.__struct__/0 is undefined compilation error useful/issues#52
+  # Avoid Plug.Upload.__struct__/0 is undefined compilation error
+  # [useful#52](https://github.com/dwyl/useful/issues/52)
   # alias Plug.Upload
   def atomize_map_keys(%Plug.Upload{} = value), do: value
 
-  # handle lists in maps: github.com/dwyl/useful/issues/46
+  # handle lists in maps:
+  # [useful#46](https://github.com/dwyl/useful/issues/46)
   def atomize_map_keys(items) when is_list(items) do
     for i <- items do
       atomize_map_keys(i)
@@ -176,7 +178,8 @@ defmodule Useful do
   `stringy_map/1` converts a `Map` of any depth/nesting into a string.
   Deeply nested maps are denoted by "__" (double underscore). See flatten_map/1
   for more details.
-  Alphabetizes the keys for consistency. See: github.com/dwyl/useful/issues/56
+  Alphabetizes the keys for consistency.
+  See: [useful#56](https://github.com/dwyl/useful/issues/56)
 
   ## Examples
 
@@ -242,8 +245,88 @@ defmodule Useful do
   end
 
   @doc """
-  `typeof/1` returns the type of a vairable.
-  Inspired by stackoverflow.com/questions/28377135/check-typeof-variable-in-elixir
+  `truncate/3` truncates an `input` (`String`) to desired `length` (`Number`).
+  _Optional_ third param `terminator` defines what comes after truncated text.
+  The default is "..." but any alternative can be defined; see examples below.
+
+  Don't cut a string mid-word e.g: "I like to eat shiitaki mushrooms"
+  should not be truncated to "I like to eat shiit..."
+  Rather, it should truncate to: "I like to eat ..."
+  I'm sure you can think of more examples, but you get the idea.
+
+  ## Examples
+
+      iex> input = "A room without books is like a body without a soul."
+      iex> Useful.truncate(input, 29)
+      "A room without books is like..."
+
+      iex> input = "do or do not there is no try"
+      iex> Useful.truncate(input, 12, "") # no ellipsis
+      "do or do not"
+
+  """
+  # Header with default value for terminator
+  def truncate(input, length, terminator \\ "...")
+
+  def truncate(input, _length, _terminator) when not is_binary(input) do
+    # return the input unmodified
+    input
+  end
+
+  def truncate(input, length, _terminator) when not is_number(length) do
+    # return the input unmodified if length is NOT a number
+    input
+  end
+
+  def truncate(input, _length, terminator) when not is_binary(terminator) do
+    # return the input unmodified
+    input
+  end
+
+  def truncate(input, length, terminator) do
+    cond do
+      # avoid processing invalid binaries, return input early:
+      # hexdocs.pm/elixir/1.12/String.html#valid?/1
+      !String.valid?(input) ->
+        input
+
+      # input is less than length, return full input early:
+      String.length(input) <= length ->
+        input
+
+      # input is valid and longer than `length`, attempt to truncate it:
+      true ->
+        # Slice the input string at the end of `length`:
+        sliced = String.slice(input, 0..(length - 1))
+        # dbg(sliced)
+        # Get character at the position of `length` in the input string:
+        char_at = String.at(input, length)
+        # Check if character at end of the truncated string is whitespace:
+        sliced =
+          if Regex.match?(~r/\p{Zs}/u, char_at) do
+            sliced
+          else
+            # Character at the end of the truncated string is NOT whitespace
+            # since we don't want to cut a word in half, we instead find a space.
+            # Find the last whitespace character nearest (before) `length`:
+            # Regex: https://elixirforum.com/t/detect-char-whitespace/26735/5
+            # Try it in iex:
+            # > Regex.scan(~r/\p{Zs}/u, "foo bar baz", return: :index)
+            # > [[{3, 1}], [{7, 1}]]
+            [{index, _}] =
+              Regex.scan(~r/\p{Zs}/u, sliced, return: :index)
+              |> List.last()
+
+            String.slice(input, 0..(index - 1))
+          end
+
+        "#{sliced}#{terminator}"
+    end
+  end
+
+  @doc """
+  `typeof/1` returns the type of a variable.
+  Inspired by https://stackoverflow.com/questions/28377135/typeof-var-elixir
 
   ## Examples
 

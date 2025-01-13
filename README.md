@@ -219,6 +219,38 @@ iex> Useful.stringify_tuple(tuple)
 "ok: example"
 ```
 
+### `truncate/3`
+
+> **truncate**; To shorten (something) by, or as if by, cutting part of it off.
+> [wiktionary.org/wiki/truncate](https://en.wiktionary.org/wiki/truncate)
+
+Returns a truncated version of the `String` according to the desired `length`.
+_Useful_ if your displaying an uncertain amount of text in an interface.
+E.g. the "bio" field on GitHub can be up **`160 characters`**.
+_Most_ `people` don't have a `bio` but some use every character.
+If you're displaying profiles in an interface, you want a _predictable_ length.
+Usage:
+
+```elixir
+iex> input = "You cannot lose what you never had."
+iex> Useful.truncate(input, 18)
+"You cannot lose ..."
+```
+
+The **_optional_ third argument** `terminator`
+allows specify any `String` or an _empty_ `String` if you prefer
+as the terminator for your truncated text:
+
+```elixir
+iex> input = "do or do not there is no try"
+iex> Useful.truncate(input, 12, "") # no ellipsis
+"do or do not"
+
+iex> input = "It was the best of times, it was the worst of times"
+iex> Useful.trucate(input, 25, "")
+"It was the best of times"
+```
+
 ### `typeof/1`
 
 Returns the type of a variable, e.g: "function" or "integer"
